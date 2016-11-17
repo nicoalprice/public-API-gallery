@@ -1,4 +1,4 @@
-//$document.ready(function() {
+$(document).ready(function() {
 
 	// User enters a search term
 	// Receive JSON response
@@ -6,35 +6,43 @@
 
 	//When user hits enter key...
 	$('#search').keypress(function(e) {
-		if (e.which == 13) { // enter key
+		if (e.which == 13) { // enter
 			e.preventDefault;
 
 	// Javascript retrieves that search term
 		var userSearch = $('input#search').val();
 		alert(userSearch);
-		}
-	});
-
-//	var openLibraryAPI = 'http://openlibrary.org/search.json?q=';
-//		openLibraryAPI += 'userSearch';
-//	var options;
-//	function displayBooks(data) {
-//		var bookHTML = ''<ul id="gallery">';
-//		$.each(data.items, function(i, book) {
-//			bookHTML += '<li>';
-//			bookHTML += '<a href="https://openlibrary.org/api/books?bibkeys=OLID:';
-//			bookHTML += 'book.docs.key"';
-//			bookHTML +='</a><img src="book.docs.cover_i"/>';
-//			bookHTML +='</li>';
-//		});
-//		bookHTML += '</ul>';
-//	};
-//	// Make a GET request to OpenLibrary, sending the search term along
-//	$.getJSON(openLibraryAPI, options, displayBooks;
-//	}); //end submit function
 
 
-//}); //end ready
+		var openLibraryAPI = 'http://openlibrary.org/search.json?q=';
+			openLibraryAPI += userSearch;
+			alert(openLibraryAPI);
+		var options;
+
+		function displayBooks(data) {
+			var bookHTML = '<ul>';
+			$.each(data.items, function(i, book) {
+				bookHTML += '<li>';
+				bookHTML += '<a href="https://openlibrary.org/api/books?bibkeys=OLID:';
+				bookHTML += book.docs.edition_key + '"';
+				bookHTML +='</a><img src="http://covers.openlibrary.org/b/OLID/"' + book.docs.edition_key;
+				bookHTML += '/-M.jpg" />'
+				bookHTML +='</li>';
+			});
+
+			bookHTML += '</ul>';
+
+			alert(bookHTML);
+			$('#gallery').html(bookHTML);
+		};
+		// Make a GET request to OpenLibrary, sending the search term along
+		$.getJSON(openLibraryAPI.docs, options, displayBooks);
+	} // end if statement
+
+	}); //end submit function
+
+
+}); //end ready
 
 //	put key from search after colon
 //	&bibkeys=OLID:OL123M
