@@ -1,0 +1,226 @@
+/* Treehouse Project #10: Public API Gallery */
+/* by Nicoal Price */
+/* Icons by Designerz Base from www.flaticon.com  */
+
+/* ===================
+	GENERAL STYLES
+====================== */
+
+* {
+	box-sizing: border-box;
+	font-family: 'Comfortaa', sans-serif;
+}
+
+ul,
+li,
+a {
+	list-style: none;
+	display: inline-block;
+	padding: 0;
+	margin: 0;
+}
+
+
+/* ======================
+	HEADER
+========================= */
+
+header {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	height: 200px;
+	background: white;
+}
+
+#page-title {
+	text-align: center;
+	width: 100%;
+	margin: auto;
+	padding: 30px;
+}
+
+.search-box {
+	width: 60%;
+	max-width: 460px;
+	margin: auto;
+	font-size: 1em;
+	height: 2em;
+}
+
+input {
+	margin: auto;
+	padding: 10px;
+	width: 100%;
+	border-radius: 4px;
+	border: 1px solid black;
+	background: #ededed;
+}
+
+
+/* =======================
+	GALLERY
+========================== */
+
+.wrapper {
+	width: 200px; /* one column */
+	margin: 200px auto 0; /* top margin clears fixed header */
+}
+
+#gallery {
+	margin-top: 0;
+	margin-right: -60px;
+}
+
+#gallery a:hover {
+	opacity: 0.6;
+}
+
+#gallery li {
+	padding-right: 60px;
+	padding-bottom: 60px;
+	width: 260px;
+	margin-right: -5px;
+	border-radius: 4px;
+	border: 1px solid red;
+}
+
+#gallery img {
+	border-radius: 4px;
+	height: 200px;
+}
+
+
+/* =======================
+	OVERLAY
+========================== */
+
+#overlay {
+	background: rgba(0, 0, 0, 0.9);
+	z-index: 100;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	padding-top: 100px;
+	display: none;
+}
+
+#overlay-image {
+	display: block;
+	margin: auto;
+	width: 75%;
+	max-width: 800px;
+	border-radius: 4px;
+}
+
+#overlay p {
+	display: block;
+	color: white;
+	width: 70%;
+	font-size: .75em;
+	margin: 30px auto 0;
+}
+
+#prevArrow,
+#nextArrow {
+	display: block;
+	position: fixed;
+	top: 50px;
+	margin: 0;
+	width: 8%;
+}
+
+#prevArrow {
+	left: 35%;
+}
+
+#nextArrow {
+	right: 35%;
+}
+
+#nextArrow img,
+#prevArrow img {
+	width: 100%;
+}
+
+#exit {
+	display: block;
+	position: fixed;
+	width: 40px;
+	height: 40px;
+	top: 0;
+	right: 0;
+}
+
+#exit img {
+	height: 100%;
+	padding: 10px;
+}
+
+
+/* =======================
+	MEDIA QUERIES
+========================== */
+
+@media screen and (min-width: 450px) {
+
+	#prevArrow,
+	#nextArrow {
+		width: 7%;
+	}
+
+}
+
+@media screen and (min-width: 580px) {
+
+	.wrapper {
+		width: 460px; /* two columns */
+	}
+
+	#prevArrow,
+	#nextArrow {
+		top: 35vh;
+		width: 5%;
+	}
+
+	#nextArrow {
+		right: 15px;
+	}
+
+	#prevArrow {
+		left: 15px;
+	}
+
+	#overlay p {
+		width: 46.875%; /* 600/1280px ratio */
+		font-size: 1em;
+	}
+
+}
+
+@media screen and (min-width: 840px) {
+
+	.wrapper {
+		width: 720px; /* three columns */
+	}
+
+	#prevArrow,
+	#nextArrow {
+		top: 50vh;
+	}
+
+	#exit {
+		width: 50px;
+		height: 50px;
+	}
+
+}
+
+@media screen and (min-width: 1100px) {
+
+	.wrapper {
+		width: 980px; /* four columns */
+	}
+}
