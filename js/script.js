@@ -28,6 +28,8 @@ $(document).ready(function() {
 				bookHTML +='</a><img src="http://covers.openlibrary.org/b/OLID/"' + book.docs.edition_key;
 				bookHTML += '/-M.jpg" />'
 				bookHTML +='</li>';
+
+				return i < 10; // limit number of displayed
 			});
 
 			bookHTML += '</ul>';
