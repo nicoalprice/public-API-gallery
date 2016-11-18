@@ -10,12 +10,14 @@ $(document).ready(function() {
 			e.preventDefault;
 
 	// Javascript retrieves that search term
-		var userSearch = $('input#search').val();
+		var userSearch = $('input#search').serialize();
+//		userSearch = userSearch.replace(/ /g, "+");
 		alert(userSearch);
 
 
-		var openLibraryAPI = 'http://openlibrary.org/search.json?q=';
+		var openLibraryAPI = 'http://openlibrary.org/search.json?';
 			openLibraryAPI += userSearch;
+			openLibraryAPI += '&jscmd=data&format=json';
 			alert(openLibraryAPI);
 		var options;
 
@@ -24,7 +26,7 @@ $(document).ready(function() {
 			$.each(data.items, function(i, book) {
 				bookHTML += '<li>';
 				bookHTML += '<a href="https://openlibrary.org/api/books?bibkeys=OLID:';
-				bookHTML += book.docs.edition_key + '"';
+				bookHTML += book.docs.edition_key + '&jscmd=data&format=json"';
 				bookHTML +='</a><img src="http://covers.openlibrary.org/b/OLID/"' + book.docs.edition_key;
 				bookHTML += '/-M.jpg" />'
 				bookHTML +='</li>';
