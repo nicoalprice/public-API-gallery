@@ -18,14 +18,14 @@ $(document).ready(function() {
 	// Get records for first 10 results and display covers
 		var options;
 
-		function displayBooks(book) {
+		function displayBooks(bookData) {
 			var bookHTML = '<ul>';
 			for (i=0; i<10; i++) {
 //			$.each(data.items, function(i, book) {
 				bookHTML += '<li>';
 				bookHTML += '<a href="https://openlibrary.org/api/books?bibkeys=OLID:';
 				bookHTML += book[i].docs.edition_key + '"</a>';
-				bookHTML +='<img src="http://covers.openlibrary.org/b/OLID/"';
+				bookHTML +='<img src="p://covers.openlibrary.org/b/OLID/"';
 				bookHTML += book[i].docs.edition_key;
 				bookHTML += '/-M.jpg" />';
 				bookHTML +='</li>';
