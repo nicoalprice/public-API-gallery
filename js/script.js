@@ -9,42 +9,56 @@ $(document).ready(function() {
 		if (e.which == 13) { // enter
 			e.preventDefault;
 
-	// Javascript retrieves that search term
+	// Get search term
 		var userSearch = $('input#search').serialize();
-//		userSearch = userSearch.replace(/ /g, "+");
 		alert(userSearch);
 
-
+	// Construct search url
 		var openLibraryAPI = 'http://openlibrary.org/search.json?';
-			openLibraryAPI += userSearch;
-			openLibraryAPI += '&jscmd=data&format=json';
-			alert(openLibraryAPI);
-		var options;
+		openLibraryAPI += userSearch;
+		alert(openLibraryAPI);
 
-		function displayBooks(data) {
-			var bookHTML = '<ul>';
-			$.each(data.items, function(i, book) {
-				bookHTML += '<li>';
-				bookHTML += '<a href="https://openlibrary.org/api/books?bibkeys=OLID:';
-				bookHTML += book.docs.edition_key + '&jscmd=data&format=json"';
-				bookHTML +='</a><img src="http://covers.openlibrary.org/b/OLID/"' + book.docs.edition_key;
-				bookHTML += '/-M.jpg" />'
-				bookHTML +='</li>';
-
-				return i < 10; // limit number of displayed
-			});
-
-			bookHTML += '</ul>';
-
-			alert(bookHTML);
-			$('#gallery').html(bookHTML);
-		};
-		// Make a GET request to OpenLibrary, sending the search term along
-		$.getJSON(openLibraryAPI.docs, options, displayBooks);
-	} // end if statement
-
-	}); //end submit function
-
+//	// Get records for first 10 results
+//			function getBookInfo(bookList) {
+//				$.each(bookList.items, function(i, book) {
+//					var bookData = 'http://openlibrary.org/'
+//					bookData += '&bibkeys=OLID:';
+//					bookData += book.docs.edition_key;
+//					console.log(bookData);
+//					return i < 10; // Limit number of books used
+//				}
+//			)
+//			$.getJSON(bookData, options, getBookInfo);
+//			}; //end getBookInfo
+//
+///
+//			var options;
+//
+//
+//		function displayBooks(data) {
+//			var bookHTML = '<ul>';
+//			$.each(data.items, function(i, book) {
+//				bookHTML += '<li>';
+//				bookHTML += '<a href="https://openlibrary.org/api/books?bibkeys=OLID:';
+//				bookHTML += book.docs.edition_key + '&jscmd=data&format=json"';
+//				bookHTML +='</a><img src="http://covers.openlibrary.org/b/OLID/"' + book.docs.edition_key;
+//				bookHTML += '/-M.jpg" />'
+//				bookHTML +='</li>';
+//			}
+//
+//			)}; // end displayBooks
+//
+//			bookHTML += '</ul>';
+//
+//			alert(bookHTML);
+//			$('#gallery').html(bookHTML);
+//		};
+//		// Make a GET request to OpenLibrary, sending the search term along
+////		$.getJSON(openLibraryAPI, options, displayBooks);
+//	// end if statement
+//
+//	}); //end submit function
+//
 
 }); //end ready
 
