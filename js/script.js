@@ -13,6 +13,7 @@ $(document).ready(function() {
 			// Construct search url
 			var openLibraryAPI = 'https://openlibrary.org/search.json?';
 				openLibraryAPI += userSearch;
+				openLibraryAPI += '&callback=?';
 			alert(openLibraryAPI); // test
 
 			// Get records for first 10 results and display covers
