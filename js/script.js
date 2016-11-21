@@ -11,7 +11,7 @@ $(document).ready(function() {
 			alert(userSearch); // test
 
 			// Construct search url
-			var openLibraryAPI = '//openlibrary.org/search.json?';
+			var openLibraryAPI = 'https://openlibrary.org/search.json?';
 				openLibraryAPI += userSearch;
 			alert(openLibraryAPI); // test
 
