@@ -56,7 +56,6 @@ input {
 	background: #ededed;
 }
 
-
 /* =======================
 	GALLERY
 ========================== */
@@ -69,7 +68,7 @@ input {
 #gallery {
 }
 
-#gallery a:hover {
+#gallery li:hover {
 	opacity: 0.6;
 }
 
