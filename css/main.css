@@ -56,6 +56,11 @@ input {
 	background: #ededed;
 }
 
+#no-results {
+	color: darkred;
+	font-size: 1.1em;
+}
+
 /* =======================
 	GALLERY
 ========================== */
