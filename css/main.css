@@ -56,6 +56,10 @@ input {
 	background: #ededed;
 }
 
+#no-results {
+	color: darkred;
+	font-size: 1.1em;
+}
 
 /* =======================
 	GALLERY
@@ -69,7 +73,7 @@ input {
 #gallery {
 }
 
-#gallery a:hover {
+#gallery li:hover {
 	opacity: 0.6;
 }
 
