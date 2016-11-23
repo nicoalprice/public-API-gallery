@@ -8,7 +8,7 @@
 
 * {
 	box-sizing: border-box;
-	font-family: 'Comfortaa', sans-serif;
+	font-family: 'Corben', sans-serif;
 }
 
 ul,
@@ -92,7 +92,7 @@ input {
 }
 
 #gallery.book-title {
-	font-family: serif;
+	font-family: Corben;
 	font-size: .75em;
 }
 
