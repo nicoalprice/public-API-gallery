@@ -12,10 +12,8 @@
 }
 
 ul,
-li,
-a {
+li {
 	list-style: none;
-	display: inline-block;
 	padding: 0;
 	margin: 0;
 }
@@ -31,6 +29,7 @@ header {
 	width: 100%;
 	height: 200px;
 	background: white;
+	z-index: 1;
 }
 
 #page-title {
@@ -63,37 +62,55 @@ input {
 ========================== */
 
 .wrapper {
-	width: 200px; /* one column */
-	margin: 200px auto 0; /* top margin clears fixed header */
+	margin-top: 200px; /* top margin clears fixed header */
+	width: 100%;
 }
 
 #gallery {
-	margin-top: 0;
-	margin-right: -60px;
 }
 
 #gallery a:hover {
 	opacity: 0.6;
 }
 
+#gallery ul {
+	margin: auto;
+	margin-top: 0;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: flex-start;
+	width: 95%;
+}
+
 #gallery li {
-	padding-right: 60px;
-	padding-bottom: 60px;
-	width: 260px;
-	margin-right: -5px;
 	border-radius: 4px;
-	border: 1px solid red;
-	height: 400px;
+	padding: 0 10px;
+	height: 300px;
+	width: 200px;
+	border: 1px solid grey;
+	position: relative;
+	margin: 10px;
 }
 
 #gallery img {
+	display: block;
+	margin: 5px auto;
+	padding-top: 4px;
 	border-radius: 4px;
-/*	height: 200px;*/
+	min-height: 200px;
+	max-height: 250px;
+	max-width: 150px;
 }
 
-#gallery.book-title {
-	font-family: Corben;
-	font-size: .75em;
+p.book-title {
+	font-family: 'Corben';
+	font-size: .9em;
+	position: absolute;
+	bottom: 4px;
+	left: 0;
+	width: 100%;
+	text-align: center;
 }
 
 
@@ -181,10 +198,6 @@ input {
 
 @media screen and (min-width: 580px) {
 
-	.wrapper {
-		width: 460px; /* two columns */
-	}
-
 	#prevArrow,
 	#nextArrow {
 		top: 35vh;
@@ -208,10 +221,6 @@ input {
 
 @media screen and (min-width: 840px) {
 
-	.wrapper {
-		width: 720px; /* three columns */
-	}
-
 	#prevArrow,
 	#nextArrow {
 		top: 50vh;
@@ -222,11 +231,4 @@ input {
 		height: 50px;
 	}
 
-}
-
-@media screen and (min-width: 1100px) {
-
-	.wrapper {
-		width: 980px; /* four columns */
-	}
 }

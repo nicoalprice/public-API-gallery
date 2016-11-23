@@ -17,7 +17,9 @@ $(document).ready(function() {
 				console.log(response);
 				var bookHTML = '<ul>'; // start gallery list
 				// Loop through search results
-				for (i=0; i<25; i++) {
+				for (i=0; i<100; i++) {
+					// Only show titles with cover images
+					if (response.docs[i].cover_edition_key != undefined) {
 //					$.each(bookData.docs, function(i, book) {
 						bookHTML += '<li>';
 						bookHTML += '<a href="http://openlibrary.org/books/';
@@ -26,7 +28,7 @@ $(document).ready(function() {
 						bookHTML += response.docs[i].cover_edition_key;
 						bookHTML += '-M.jpg" alt="' + response.docs[i].title + '"/></a>';
 						bookHTML += '<p class="book-title">' + response.docs[i].title + '</p>'
-						bookHTML +='</li>';
+						bookHTML +='</li>';}
 //					}; // end anonymous function
 				}; // end for loop
 
