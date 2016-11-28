@@ -61,7 +61,8 @@ $(document).ready(function() {
 
 				// If gallery li is clicked
 				$('#gallery li').click(function(){
-					var author = $(this).author_key;
+					cover = $(this).children().attr("src");
+					title = $(this).children().attr("alt");
 					openOverlay(book);
 				});
 			}; // end displayBooks
@@ -70,6 +71,7 @@ $(document).ready(function() {
 			// Callback function to display movie search results
 			function displayMovies(response) {
 				movies = response.Search;
+
 				var movieHTML = '<ul>'; // start gallery list
 
 				if (response.Response == false) {
@@ -100,9 +102,9 @@ $(document).ready(function() {
 
 				// If gallery li is clicked
 				$('#gallery li').click(function(){
-					alert('this: ' + $(this).html());
 					cover = $(this).children().attr("src");
 					title = $(this).children().attr("alt");
+					author = $(this).children().attr("p.author");
 					openOverlay(movie);
 				});
 			}; // end displayMovies
@@ -145,15 +147,15 @@ $(document).ready(function() {
 		// If book is clicked...
 		if (type == book) {
 			/* append cover image */
-			$image.attr("src", cover);
+			$overlay.append($image);
+			$image.append(cover);
 
 			/* append author name */
-			var author = $(this).author_key;
-			console.log("author:" + author);
 
 			/* append title */
 			$overlay.append($title);
-			$title.append();
+			$title.append(title);
+
 		} // end if statement for type = book
 
 		// If movie is clicked...
@@ -164,8 +166,7 @@ $(document).ready(function() {
 			var author = $(this).author_key;
 
 			/* append title */
-			$overlay.append($title);
-			$title.append();
+			$title.append(title);
 
 			/* get plot */
 
