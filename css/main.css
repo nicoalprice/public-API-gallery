@@ -56,6 +56,23 @@ input {
 	background: #ededed;
 }
 
+#radio-buttons {
+	width: 60%;
+	margin: auto;
+	padding: 20px;
+	text-align: center;
+}
+
+input[type=radio] {
+	width: 30px;
+}
+
+label {
+	padding-left: 0;
+	font-weight: 400;
+	font-size: 1em;
+}
+
 #no-results {
 	color: darkred;
 	font-size: 1.1em;
@@ -107,7 +124,7 @@ input {
 	max-width: 150px;
 }
 
-p.book-title {
+p.title {
 	font-family: 'Corben';
 	font-size: .9em;
 	position: absolute;
@@ -115,6 +132,10 @@ p.book-title {
 	left: 0;
 	width: 100%;
 	text-align: center;
+}
+
+p.author {
+	display: none;
 }
 
 

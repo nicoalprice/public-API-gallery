@@ -14,9 +14,13 @@
 
 		<header>
 			<h1 id="page-title">Book & Movie Search</h1>
-			<form id="search-box">
+				<form id="search-box">
 				<input id="search" name="q" placeholder="Search..." type="search">
 			</form>
+			<div id="radio-buttons">
+				<input id="book-search" type="radio" name="search-type" value="book-search"><label for="book-search">Book</label>
+				<input id="movie-search" type="radio" name="search-type" value="movie-search"><label for="movie-search">Movie</label>
+			</div>
 		</header>
 
 		<div class="wrapper">
@@ -29,7 +33,6 @@
 
 		<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 		<script src="js/script.js"></script>
-<!--		<script src="js/overlay.js"></script>-->
 
 	</body>
 </html>
