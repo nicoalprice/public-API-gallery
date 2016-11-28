@@ -25,18 +25,24 @@ $(document).ready(function() {
 				else {
 				// Loop through search results
 					for (i=0; i<100; i++) {
-						// Only show titles with cover images
-						if (books[i].cover_edition_key != undefined) {
+						// If edition_key exists
+						if (books[i].edition_key) {
 							bookHTML += '<li>';
 							bookHTML += '<a href="http://openlibrary.org/books/';
-							bookHTML += books[i].edition_key[0] + '" target="_blank">';
-							bookHTML +='<img src="http://covers.openlibrary.org/b/olid/';
-							bookHTML += books[i].cover_edition_key;
-							bookHTML += '-M.jpg" alt="' + books[i].title + '"/></a>';
+							bookHTML += books[i].edition_key[0]+ '" target="_blank">';
+							bookHTML += '<img src='
+							if (books[i].cover_edition_key != undefined) {
+								bookHTML +='"http://covers.openlibrary.org/b/olid/';
+								bookHTML += books[i].cover_edition_key + '-M.jpg"';
+							}
+							else { // Display default cover image
+								bookHTML += '"img/no-cover.png"';
+							}
+							bookHTML += ' alt="' + books[i].title + '"/></a>';
 							bookHTML += '<p class="title">' + books[i].title + '</p>';
 							bookHTML += '<p class="author"' + books[i].author_name + '</p>';
 							bookHTML +='</li>';
-						}
+						} // end edition_key if statement
 					}; // end for loop
 					} // end else statement
 
@@ -59,7 +65,13 @@ $(document).ready(function() {
 					for (i=0; i<movies.length; i++) {
 						movieHTML += '<li>';
 						movieHTML +='<img src="';
+						// If no movie poster, display default image
+						if (movies[i].Poster == "N/A") {
+							movieHTML += 'img/no-cover.png" ';
+						}
+						else {
 						movieHTML += movies[i].Poster + '" ';
+						}
 						movieHTML += 'alt="' + movies[i].Title + '"/></a>';
 						movieHTML += '<p class="title">' + movies[i].Title + '</p>';
 						movieHTML +='</li>';
@@ -73,17 +85,18 @@ $(document).ready(function() {
 
 		// If book search is checked
 		if ($('input#book-search').is(":checked")) {
-			// Make a GET request to OpenLibrary, sending the search term along
+			// AJAX request to OpenLibrary with search term
 			$.getJSON(openLibraryAPI, bookSearch, displayBooks);
 		}
 		// If movie search is checked
 		else if ($('input#movie-search').is(":checked")) {
-			// AJAX request to OMDB
+			// AJAX request to OMDB with search term
 			$.getJSON(movieAPI, movieSearch, displayMovies);
 		}
 
 		}// end if statement for pressing Enter
 
+	}); //end submit function
 
 
 	/*** OVERLAY ***/
@@ -101,12 +114,13 @@ $(document).ready(function() {
 	$("#gallery li").on("click", function(event) {
 
 		/* Add overlay to body of index.html */
-		$("body").append($overlay);
-
+//		$("body").append($overlay);
+		console.log("li was clicked!"); // test
 		alert("li was clicked!"); // test
+	});
 
 		/* stop click from opening img url */
-//		event.preventDefault();
+		event.preventDefault();
 
 //		/* get cover image */
 //		var cover = $(this).attr("src");
@@ -138,7 +152,7 @@ $(document).ready(function() {
 
 		/* show the overlay */
 //		$overlay.fadeIn(1500);
-	});
+//	}); // end gallery li click function
 
 //	/* When the next button is clicked... */
 //	$nextArrow.on("click", function(event) {
@@ -216,7 +230,5 @@ $(document).ready(function() {
 //		updateImage(imageLocation, imageCaption);
 //	}
 	// end overlay code
-
-}); //end submit function
 
 }); //end ready
