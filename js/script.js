@@ -134,8 +134,7 @@ $(document).ready(function() {
 
 		// If book is clicked...
 		if (type == book) {
-
-		/* get cover image */
+			/* get cover image */
 			var cover = $(this).attr("src");
 			console.log("cover:" + cover);
 			$image.attr("src", cover);
