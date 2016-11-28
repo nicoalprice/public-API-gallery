@@ -134,6 +134,10 @@ p.title {
 	text-align: center;
 }
 
+p.author {
+	display: none;
+}
+
 
 /* =======================
 	OVERLAY
