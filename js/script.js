@@ -1,4 +1,7 @@
 $(document).ready(function() {
+	// Global Variables
+	var book;
+	var movie;
 	// User enters a search term
 	// When user hits enter key...
 	$('body').keypress(function(event) {
@@ -13,7 +16,7 @@ $(document).ready(function() {
 			var bookSearch = $('input#search').serialize();
 			var movieSearch = 's=' + $('input#search').val();
 
-			// Callback function to display book covers
+			// Callback function to display book search results
 			function displayBooks(response) {
 				var bookHTML = '<ul>'; // start gallery list
 				var books = response.docs;
@@ -49,10 +52,16 @@ $(document).ready(function() {
 				bookHTML += '</ul>'; // end gallery list
 
 				$('#gallery').html(bookHTML);
+
+				// If gallery li is clicked
+				$('#gallery li').click(function(){
+					var author = $(this).author_key;
+					openOverlay(book);
+				});
 			}; // end displayBooks
 
 
-			// Callback function to display movie posters
+			// Callback function to display movie search results
 			function displayMovies(response) {
 				var movies = response.Search;
 				var movieHTML = '<ul>'; // start gallery list
@@ -81,6 +90,11 @@ $(document).ready(function() {
 				movieHTML += '</ul>'; // end gallery list
 
 				$('#gallery').html(movieHTML); // display movies
+
+				// If gallery li is clicked
+				$('#gallery li').click(function(){
+					openOverlay(movie);
+				});
 			}; // end displayMovies
 
 		// If book search is checked
@@ -89,7 +103,7 @@ $(document).ready(function() {
 			$.getJSON(openLibraryAPI, bookSearch, displayBooks);
 		}
 		// If movie search is checked
-		else if ($('input#movie-search').is(":checked")) {
+		else if ($('input#movie-search').is(':checked')) {
 			// AJAX request to OMDB with search term
 			$.getJSON(movieAPI, movieSearch, displayMovies);
 		}
@@ -101,58 +115,73 @@ $(document).ready(function() {
 
 	/*** OVERLAY ***/
 
-	var $overlay = $("<div id='overlay'></div>");
-	var $image = $("<img id='overlay-image'>");
-	var $title = $("<p></p>");
-//	var $exit = $('<div id="exit"><img src="images/icons/exit.png" alt="exit"></div>');
-//	var $prevArrow = $('<div id="prevArrow"><img src="../img/eft-arrow.svg" alt="previous" /></div>');
-//	var $nextArrow = $('<div id="nextArrow"><img src="../img/right-arrow.svg" alt="next" /></div>');
+	var $overlay = $('<div id="overlay"></div>');
+	var $image = $('<img id="overlay-image">');
+	var $title = $('<p></p>');
+	var $exit = $('<div id="exit"><img src="img/close-button.svg" alt="exit"></div>');
+	var $prevArrow = $('<div id="prevArrow"><img src="img/left-arrow.svg" alt="previous" /></div>');
+	var $nextArrow = $('<div id="nextArrow"><img src="img/right-arrow.svg" alt="next" /></div>');
 	/* Keep track of image index for arrow buttons */
 	var $index = 0;
 
-	/* When a thumbnail is clicked... */
-	$("#gallery li").on("click", function(event) {
-
+	/* Function to open overlay */
+	function openOverlay(type) {
 		/* Add overlay to body of index.html */
-//		$("body").append($overlay);
-		console.log("li was clicked!"); // test
-		alert("li was clicked!"); // test
-	});
+		$("body").append($overlay);
 
 		/* stop click from opening img url */
 		event.preventDefault();
 
-//		/* get cover image */
-//		var cover = $(this).attr("src");
-//
-//		/* get author from p.author */
-//		var author = $(this).attr("p.author");
-//
-//		/* get title */
-//		var title = $(this).attr("alt");
-//
-//		/* add exit button. */
-//		$overlay.append($exit);
-//
-//		 /* call function to capture info for the clicked image */
+		// If book is clicked...
+		if (type == book) {
+
+		/* get cover image */
+			var cover = $(this).attr("src");
+			console.log("cover:" + cover);
+			$image.attr("src", cover);
+
+			/* get author from p.author */
+			var author = $(this).author_key;
+			console.log("author:" + author);
+
+			/* get title */
+			var title = $(this).attr("alt");
+		} // end if statement for type = book
+
+		// If movie is clicked...
+		if (type == movie) {
+			/* get cover image */
+			var cover = $(this).attr("src");
+
+			/* get author from p.author */
+			var author = $(this).author_key;
+
+			/* get title */
+			var title = $(this).attr("alt");
+		} // end if statement for type = movie
+
+		/* add exit button. */
+		$overlay.append($exit);
+
+		 /* call function to capture info for the clicked image */
 //		updateImage(cover, title);
-//
-//		/* add image to overlay */
-//		$overlay.append($image);
-//
-//		/* get index for current image */
-//		$index = $(this).parent().index();
-//
-//		/* add text captions to the images when viewed in the lightbox. */
-//		$overlay.append(title);
-//
-//		/* add back and forward navigation buttons when lightbox is visible */
-//		$image.after($prevArrow);
-//		$image.before($nextArrow);
+
+		/* add image to overlay */
+		$overlay.append($image);
+
+		/* get index for current image */
+		$index = $(this).parent().index();
+
+		/* add text captions to the images when viewed in the lightbox. */
+		$overlay.append(title);
+
+		/* add back and forward navigation buttons when lightbox is visible */
+		$image.after($prevArrow);
+		$image.before($nextArrow);
 
 		/* show the overlay */
-//		$overlay.fadeIn(1500);
-//	}); // end gallery li click function
+		$overlay.fadeIn(1500);
+	}; // end openOverlay()
 
 //	/* When the next button is clicked... */
 //	$nextArrow.on("click", function(event) {
@@ -177,17 +206,17 @@ $(document).ready(function() {
 //	  }
 //	});
 
-//	/* Hide overlay when exit button is clicked. */
-//	$exit.on("click", function() {
-//		$overlay.fadeOut(1000).hide();
-//	});
-//
-//	/* Hide overlay when esc key is pressed */
-//	$("body").keydown(function(event) {
-//		if (event.which == 27) {
-//			$overlay.fadeOut(1000).hide();
-//		}
-//	});
+	/* Hide overlay when exit button is clicked. */
+	$exit.on("click", function() {
+		$overlay.fadeOut(1000).hide();
+	});
+
+	/* Hide overlay when esc key is pressed */
+	$("body").keydown(function(event) {
+		if (event.which == 27) {
+			$overlay.fadeOut(1000).hide();
+		}
+	});
 
 	/*** OVERLAY FUNCTIONS ***/
 //
