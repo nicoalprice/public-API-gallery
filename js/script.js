@@ -2,6 +2,12 @@ $(document).ready(function() {
 	// Global Variables
 	var book;
 	var movie;
+	var books = [];
+	var movies = [];
+	var title;
+	var author;
+	var index;
+
 	// User enters a search term
 	// When user hits enter key...
 	$('body').keypress(function(event) {
@@ -19,7 +25,7 @@ $(document).ready(function() {
 			// Callback function to display book search results
 			function displayBooks(response) {
 				var bookHTML = '<ul>'; // start gallery list
-				var books = response.docs;
+				books = response.docs;
 				console.log(books);
 
 				if (response.numFound == 0) {
@@ -63,7 +69,7 @@ $(document).ready(function() {
 
 			// Callback function to display movie search results
 			function displayMovies(response) {
-				var movies = response.Search;
+				movies = response.Search;
 				var movieHTML = '<ul>'; // start gallery list
 
 				if (response.Response == false) {
@@ -83,6 +89,7 @@ $(document).ready(function() {
 						}
 						movieHTML += 'alt="' + movies[i].Title + '"/></a>';
 						movieHTML += '<p class="title">' + movies[i].Title + '</p>';
+						movieHTML += '<p class="author">' + movies[i].Director + '</p>';
 						movieHTML +='</li>';
 					} // end for loop
 				} // end if/else statement
@@ -93,6 +100,9 @@ $(document).ready(function() {
 
 				// If gallery li is clicked
 				$('#gallery li').click(function(){
+					alert('this: ' + $(this).html());
+					cover = $(this).children().attr("src");
+					title = $(this).children().attr("alt");
 					openOverlay(movie);
 				});
 			}; // end displayMovies
@@ -117,7 +127,7 @@ $(document).ready(function() {
 
 	var $overlay = $('<div id="overlay"></div>');
 	var $image = $('<img id="overlay-image">');
-	var $title = $('<p></p>');
+	var $title = $('<p id="overlay-title"></p>');
 	var $exit = $('<div id="exit"><img src="img/close-button.svg" alt="exit"></div>');
 	var $prevArrow = $('<div id="prevArrow"><img src="img/left-arrow.svg" alt="previous" /></div>');
 	var $nextArrow = $('<div id="nextArrow"><img src="img/right-arrow.svg" alt="next" /></div>');
@@ -134,29 +144,31 @@ $(document).ready(function() {
 
 		// If book is clicked...
 		if (type == book) {
-			/* get cover image */
-			var cover = $(this).attr("src");
-			console.log("cover:" + cover);
+			/* append cover image */
 			$image.attr("src", cover);
 
-			/* get author from p.author */
+			/* append author name */
 			var author = $(this).author_key;
 			console.log("author:" + author);
 
-			/* get title */
-			var title = $(this).attr("alt");
+			/* append title */
+			$overlay.append($title);
+			$title.append();
 		} // end if statement for type = book
 
 		// If movie is clicked...
 		if (type == movie) {
-			/* get cover image */
-			var cover = $(this).attr("src");
-
-			/* get author from p.author */
+			/* add poster image */
+			$image.append(cover);
+			/* get director */
 			var author = $(this).author_key;
 
-			/* get title */
-			var title = $(this).attr("alt");
+			/* append title */
+			$overlay.append($title);
+			$title.append();
+
+			/* get plot */
+
 		} // end if statement for type = movie
 
 		/* add exit button. */
