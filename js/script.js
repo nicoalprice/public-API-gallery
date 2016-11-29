@@ -5,6 +5,8 @@ $(document).ready(function() {
 	var books = [];
 	var movies = [];
 	var title;
+	var cover;
+	var poster;
 	var author;
 	var index;
 
@@ -14,19 +16,10 @@ $(document).ready(function() {
 		if (event.which == 13) { // enter
 			event.preventDefault();
 
-			// Book search url
-			var openLibraryAPI = 'https://openlibrary.org/search.json';
-			// Movie search url
-			var movieAPI = 'https://www.omdbapi.com/?';
-			// Get search terms
-			var bookSearch = $('input#search').serialize();
-			var movieSearch = 's=' + $('input#search').val();
-
 			// Callback function to display book search results
 			function displayBooks(response) {
 				var bookHTML = '<ul>'; // start gallery list
 				books = response.docs;
-				console.log(books);
 
 				if (response.numFound == 0) {
 						bookHTML += '<p id="no-results">No results found.</p>';
@@ -49,7 +42,7 @@ $(document).ready(function() {
 							}
 							bookHTML += ' alt="' + books[i].title + '"/></a>';
 							bookHTML += '<p class="title">' + books[i].title + '</p>';
-							bookHTML += '<p class="author"' + books[i].author_name + '</p>';
+							bookHTML += '<p class="author">' + books[i].author_name + '</p>';
 							bookHTML +='</li>';
 						} // end edition_key if statement
 					}; // end for loop
@@ -57,12 +50,13 @@ $(document).ready(function() {
 
 				bookHTML += '</ul>'; // end gallery list
 
-				$('#gallery').html(bookHTML);
+				$('#gallery').html(bookHTML); //display books
 
 				// If gallery li is clicked
-				$('#gallery li').click(function(){
-					cover = $(this).children().attr("src");
-					title = $(this).children().attr("alt");
+				$('#gallery li a').click(function() {
+					cover = $(this).children().attr('src');
+					console.log('cover: ' + cover);
+					title = $(this).children().attr('alt');
 					openOverlay(book);
 				});
 			}; // end displayBooks
@@ -102,20 +96,28 @@ $(document).ready(function() {
 
 				// If gallery li is clicked
 				$('#gallery li').click(function(){
-					cover = $(this).children().attr("src");
-					title = $(this).children().attr("alt");
-					author = $(this).children().attr("p.author");
+					poster = $(this).children().attr('src');
+					title = $(this).children().attr('alt');
+					author = $(this).children().attr('p.author');
 					openOverlay(movie);
 				});
 			}; // end displayMovies
 
 		// If book search is checked
 		if ($('input#book-search').is(":checked")) {
+			// Book search url
+			var openLibraryAPI = 'https://openlibrary.org/search.json';
+			var bookSearch = $('input#search').serialize();
+
 			// AJAX request to OpenLibrary with search term
 			$.getJSON(openLibraryAPI, bookSearch, displayBooks);
 		}
 		// If movie search is checked
 		else if ($('input#movie-search').is(':checked')) {
+			// Movie search url
+			var movieAPI = 'https://www.omdbapi.com/?';
+			// Get search terms
+			var movieSearch = 's=' + $('input#search').val();
 			// AJAX request to OMDB with search term
 			$.getJSON(movieAPI, movieSearch, displayMovies);
 		}
@@ -140,33 +142,28 @@ $(document).ready(function() {
 	function openOverlay(type) {
 		/* Add overlay to body of index.html */
 		$("body").append($overlay);
-
-		/* stop click from opening img url */
+		/* Stop click from opening img url */
 		event.preventDefault();
 
+		$overlay.append($image);
+		$overlay.append($title);
+
 		// If book is clicked...
-		if (type == book) {
+		if (type === book) {
 			/* append cover image */
-			$overlay.append($image);
-			$image.append(cover);
+			$image.attr('src', cover);
 
 			/* append author name */
 
 			/* append title */
-			$overlay.append($title);
 			$title.append(title);
 
 		} // end if statement for type = book
 
 		// If movie is clicked...
-		if (type == movie) {
-			/* add poster image */
-			$image.append(cover);
-			/* get director */
-			var author = $(this).author_key;
-
-			/* append title */
-			$title.append(title);
+		if (type === movie) {
+			/* append cover image */
+			$image.append().attr('src', poster);
 
 			/* get plot */
 
