@@ -162,6 +162,7 @@ p.author {
 	border-radius: 4px
 }
 
+/*
 p#overlay-title {
 	font-weight: 200;
 	font-size: 1em;
@@ -169,20 +170,17 @@ p#overlay-title {
 	width: 60%;
 	color: white;
 	z-index: 101;
-	position: absolute;
-	right: 10px
-	top: 100px;
-}
 
-/*
+}
+*/
+
 #overlay p {
 	display: block;
 	color: white;
 	width: 70%;
 	font-size: .75em;
-	margin: 30px auto 0;
+/*	margin: 30px auto 0;*/
 }
-*/
 
 #prevArrow,
 #nextArrow {
@@ -232,12 +230,14 @@ p#overlay-title {
 		width: 7%;
 	}
 
+/*
 	#overlay-image {
 		position: absolute;
 		left: 100px;
 		top: 100px;
 		max-height: 50vh;
 	}
+*/
 
 }
 

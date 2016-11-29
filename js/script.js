@@ -7,6 +7,7 @@ $(document).ready(function() {
 	var title;
 	var cover;
 	var author;
+	var year;
 	var index;
 
 	// User enters a search term
@@ -19,6 +20,7 @@ $(document).ready(function() {
 			function displayBooks(response) {
 				var bookHTML = '<ul>'; // start gallery list
 				books = response.docs;
+				console.log(books);
 
 				if (response.numFound == 0) {
 						bookHTML += '<p id="no-results">No results found.</p>';
@@ -29,7 +31,7 @@ $(document).ready(function() {
 						// If edition_key exists
 						if (books[i].edition_key) {
 							bookHTML += '<li>';
-							bookHTML += '<a href="http://openlibrary.org/books/';
+							bookHTML += '<a class="' + i + '" href="http://openlibrary.org/books/';
 							bookHTML += books[i].edition_key[0]+ '" target="_blank">';
 							bookHTML += '<img src='
 							if (books[i].cover_edition_key != undefined) {
@@ -41,7 +43,7 @@ $(document).ready(function() {
 							}
 							bookHTML += ' alt="' + books[i].title + '"/></a>';
 							bookHTML += '<p class="title">' + books[i].title + '</p>';
-							bookHTML += '<p class="author">' + books[i].author_name + '</p>';
+//							bookHTML += '<p class="author">' + books[i].author_name + '</p>';
 							bookHTML +='</li>';
 						} // end edition_key if statement
 					}; // end for loop
@@ -53,9 +55,13 @@ $(document).ready(function() {
 
 				// If gallery li is clicked
 				$('#gallery li a').click(function() {
+					index = $(this).attr('class');
+					console.log('index: ' + index);
 					cover = $(this).children().attr('src');
-					console.log('cover: ' + cover);
-					title = $(this).children().attr('alt');
+					title = books[index].title;
+					author = books[index].author_name;
+					year = books[index].first_publish_year;
+					console.log('author: ' + author);
 					openOverlay(book);
 				});
 			}; // end displayBooks
@@ -64,6 +70,7 @@ $(document).ready(function() {
 			// Callback function to display movie search results
 			function displayMovies(response) {
 				movies = response.Search;
+				console.log(movies);
 
 				var movieHTML = '<ul>'; // start gallery list
 
@@ -73,7 +80,7 @@ $(document).ready(function() {
 				else {
 					// Loop through search results
 					for (i=0; i<movies.length; i++) {
-						movieHTML += '<li>';
+						movieHTML += '<li class="' + i + '">';
 						movieHTML +='<img src="';
 						// If no movie poster, display default image
 						if (movies[i].Poster == "N/A") {
@@ -84,7 +91,7 @@ $(document).ready(function() {
 						}
 						movieHTML += 'alt="' + movies[i].Title + '"/></a>';
 						movieHTML += '<p class="title">' + movies[i].Title + '</p>';
-						movieHTML += '<p class="author">' + movies[i].Director + '</p>';
+//						movieHTML += '<p class="author">' + movies[i].Director + '</p>';
 						movieHTML +='</li>';
 					} // end for loop
 				} // end if/else statement
@@ -95,12 +102,15 @@ $(document).ready(function() {
 
 				// If gallery li is clicked
 				$('#gallery li').click(function(){
+					index = $(this).attr('class');
+					console.log('movie index ' + index);
 					cover = $(this).children().attr('src');
 					title = $(this).children().attr('alt');
-					author = $(this).children().attr('p.author');
+					year = movies[index].Year;
 					openOverlay(movie);
 				});
 			}; // end displayMovies
+
 
 		// If book search is checked
 		if ($('input#book-search').is(":checked")) {
@@ -131,11 +141,11 @@ $(document).ready(function() {
 	var $overlay = $('<div id="overlay"></div>');
 	var $image = $('<img id="overlay-image">');
 	var $title = $('<p id="overlay-title"></p>');
+	var $author = $('<p id="overlay-author"></p>');
+	var $year = $('<p id="overlay-year"></p>');
 	var $exit = $('<div id="exit"><img src="img/close-button.svg" alt="exit"></div>');
 	var $prevArrow = $('<div id="prevArrow"><img src="img/left-arrow.svg" alt="previous" /></div>');
 	var $nextArrow = $('<div id="nextArrow"><img src="img/right-arrow.svg" alt="next" /></div>');
-	/* Keep track of image index for arrow buttons */
-	var $index = 0;
 
 	/* Function to open overlay */
 	function openOverlay(type) {
@@ -146,29 +156,33 @@ $(document).ready(function() {
 
 		$overlay.append($image);
 		$overlay.append($title);
+		$overlay.append($author);
+		$overlay.append($year);
 
-					$image.attr('src', cover);
+		// Append cover image
+		$image.attr('src', cover);
+
+		// Append title
+		$title.html('<p id="overlay-title">Title: ' + title + '</p>');
+
+		// Append year
+		$year.html('<p id="overlay-year">Year: ' + year + '</p>');
 
 //		// If book is clicked...
-//		if (type === book) {
-//			/* append cover image */
-//			$image.attr('src', cover);
+		if (type === book) {
+			// Append author name
+			$author.html('<p id="overlay-author">Author: ' + author + '</p>');
 //
-//			/* append author name */
-//
-//			/* append title */
-//			$title.append(title);
-//
-//		} // end if statement for type = book
-//
-//		// If movie is clicked...
-//		if (type === movie) {
-//			/* append cover image */
-//			$image.append().attr('src', poster);
-//
-//			/* get plot */
-//
-//		} // end if statement for type = movie
+		} // end if statement for type = book
+
+		// If movie is clicked...
+		if (type === movie) {
+			/* Clear book data */
+//			$overlay.hide($author);
+
+			/* get plot */
+
+		} // end if statement for type = movie
 
 		/* add exit button. */
 		$overlay.append($exit);
