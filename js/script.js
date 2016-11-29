@@ -6,7 +6,6 @@ $(document).ready(function() {
 	var movies = [];
 	var title;
 	var cover;
-	var poster;
 	var author;
 	var index;
 
@@ -96,7 +95,7 @@ $(document).ready(function() {
 
 				// If gallery li is clicked
 				$('#gallery li').click(function(){
-					poster = $(this).children().attr('src');
+					cover = $(this).children().attr('src');
 					title = $(this).children().attr('alt');
 					author = $(this).children().attr('p.author');
 					openOverlay(movie);
@@ -148,26 +147,28 @@ $(document).ready(function() {
 		$overlay.append($image);
 		$overlay.append($title);
 
-		// If book is clicked...
-		if (type === book) {
-			/* append cover image */
-			$image.attr('src', cover);
+					$image.attr('src', cover);
 
-			/* append author name */
-
-			/* append title */
-			$title.append(title);
-
-		} // end if statement for type = book
-
-		// If movie is clicked...
-		if (type === movie) {
-			/* append cover image */
-			$image.append().attr('src', poster);
-
-			/* get plot */
-
-		} // end if statement for type = movie
+//		// If book is clicked...
+//		if (type === book) {
+//			/* append cover image */
+//			$image.attr('src', cover);
+//
+//			/* append author name */
+//
+//			/* append title */
+//			$title.append(title);
+//
+//		} // end if statement for type = book
+//
+//		// If movie is clicked...
+//		if (type === movie) {
+//			/* append cover image */
+//			$image.append().attr('src', poster);
+//
+//			/* get plot */
+//
+//		} // end if statement for type = movie
 
 		/* add exit button. */
 		$overlay.append($exit);
