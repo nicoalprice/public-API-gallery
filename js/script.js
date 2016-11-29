@@ -57,10 +57,10 @@ $(document).ready(function() {
 				$('#gallery li a').click(function() {
 					index = $(this).attr('class');
 					console.log('index: ' + index);
-					cover = $(this).children().attr('src');
 					title = books[index].title;
 					author = books[index].author_name;
 					year = books[index].first_publish_year;
+					cover = $(this).children().attr('src');
 					console.log('author: ' + author);
 					openOverlay(book);
 				});
@@ -91,7 +91,6 @@ $(document).ready(function() {
 						}
 						movieHTML += 'alt="' + movies[i].Title + '"/></a>';
 						movieHTML += '<p class="title">' + movies[i].Title + '</p>';
-//						movieHTML += '<p class="author">' + movies[i].Director + '</p>';
 						movieHTML +='</li>';
 					} // end for loop
 				} // end if/else statement
@@ -103,10 +102,8 @@ $(document).ready(function() {
 				// If gallery li is clicked
 				$('#gallery li').click(function(){
 					index = $(this).attr('class');
-					console.log('movie index ' + index);
+					console.log('movie index: ' + index);
 					cover = $(this).children().attr('src');
-					title = $(this).children().attr('alt');
-					year = movies[index].Year;
 					openOverlay(movie);
 				});
 			}; // end displayMovies
@@ -159,6 +156,26 @@ $(document).ready(function() {
 		$overlay.append($author);
 		$overlay.append($year);
 
+//		// If book is clicked...
+		if (type == book) {
+
+			// Append author name
+			$author.html('<p id="overlay-author">Author: ' + author + '</p>');
+//
+		} // end if statement for type = book
+
+		// If movie is clicked...
+		else if (type == movie) {
+
+			title = movies[index].Title;
+			year = movies[index].Year;
+			/* Clear book data */
+//			$overlay.hide($author);
+
+			/* get plot */
+
+		} // end if statement for type = movie
+
 		// Append cover image
 		$image.attr('src', cover);
 
@@ -168,21 +185,7 @@ $(document).ready(function() {
 		// Append year
 		$year.html('<p id="overlay-year">Year: ' + year + '</p>');
 
-//		// If book is clicked...
-		if (type === book) {
-			// Append author name
-			$author.html('<p id="overlay-author">Author: ' + author + '</p>');
-//
-		} // end if statement for type = book
 
-		// If movie is clicked...
-		if (type === movie) {
-			/* Clear book data */
-//			$overlay.hide($author);
-
-			/* get plot */
-
-		} // end if statement for type = movie
 
 		/* add exit button. */
 		$overlay.append($exit);
@@ -192,9 +195,6 @@ $(document).ready(function() {
 
 		/* add image to overlay */
 		$overlay.append($image);
-
-		/* get index for current image */
-		$index = $(this).parent().index();
 
 		/* add text captions to the images when viewed in the lightbox. */
 		$overlay.append(title);
@@ -207,10 +207,11 @@ $(document).ready(function() {
 		$overlay.fadeIn(1500);
 	}; // end openOverlay()
 
-//	/* When the next button is clicked... */
-//	$nextArrow.on("click", function(event) {
-//		nextImage();
-//	});
+	/* When the next button is clicked... */
+	$nextArrow.on("click", function(event) {
+		nextImage();
+	});
+
 //	/* When right arrow key is pressed... */
 //	$("body").keydown(function(event){
 //		if ( event.which == 39 ) {
@@ -251,15 +252,20 @@ $(document).ready(function() {
 //		$caption.text(imageCaption);
 //	}
 //
-//	function nextImage() {
-//		 /* update index */
-//		$index++;
-//		/* loop up to first image in gallery */
-//		if ($index >= $("#gallery li").length) {
-//			$index = 0;
-//		}
+	function nextImage() {
+		 /* update index */
+		index++;
+		/* loop up to first image in gallery */
+		if (index >= $("#gallery li").length) {
+			index = 0;
+		}
+
+		title = movies[index].Title;
+
+		};
+
 //		/* use index to get next image */
-//		var nextImage = $("#gallery li").get($index).getElementsByTagName("a");
+//		var nextImage = $("#gallery li").get(index).getElementsByTagName("a");
 //		/* get new image location and caption */
 //		var imageLocation = $(nextImage).attr("href");
 //		var imageCaption =  $(nextImage).children("img").attr("alt");
@@ -269,13 +275,13 @@ $(document).ready(function() {
 //
 //	function previousImage() {
 //		/* update the index */
-//		$index--;
+//		index--;
 //		/* loop back to last image in gallery */
-//		if ($index < 0) {
-//			$index = $("#gallery li").length - 1;
+//		if (index < 0) {
+//			index = $("#gallery li").length - 1;
 //		}
 //		/* get the previous image by index */
-//		var prevImage = $("#gallery li").get($index).getElementsByTagName("a");
+//		var prevImage = $("#gallery li").get(index).getElementsByTagName("a");
 //		/* update the image location and caption */
 //		var imageLocation = $(prevImage).attr("href");
 //		var imageCaption =  $(prevImage).children("img").attr("alt");
