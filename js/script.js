@@ -134,7 +134,7 @@ $(document).ready(function() {
 							console.log('plot response: ' + plot); // correct plot
 							console.log('director: ' + director);
 						}
-					}); // end ajax request
+				}); // end ajax request
 
 				};
 

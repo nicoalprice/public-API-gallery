@@ -6,7 +6,7 @@
 	var $text = $('<div id="overlay-text"></div');
 	var $title = $('<p id="overlay-title"></p>');
 	var $author = $('<p id="overlay-author"></p>');
-	var $year = $('<p id="overlay-year"></p>');
+	var $director = $('<p id="overlay-director"></p>');
 	var $plot = $('<p id="overlay-plot"></p>');
 	var $exit = $('<div id="exit"><img src="img/close-button.svg" alt="exit"></div>');
 	var $prevArrow = $('<div id="prevArrow"><img src="img/left-arrow.svg" alt="previous" /></div>');
@@ -18,24 +18,28 @@
 		$("body").append($overlay);
 		$overlay.append($wrapper);
 		/* Stop click from opening img url */
-		event.preventDefault();
+//		event.preventDefault();
 
 		$wrapper.append($text);
 		$text.append($title);
-		$text.append($year);
+		$text.append($director);
+		$text.append($author);
 		$text.append($plot);
 
 	// If book is clicked...
-		if (type == book) {
+		if (type === book) {
+			// Clear movie data
+			$director.html('');
 			// Append author name
-			$text.append($author);
 			$author.html('<p id="overlay-author">Author: ' + author + '</p>');
 		} // end if statement for type = book
 
 		// If movie is clicked...
-		else if (type == movie) {
+		if (type === movie) {
 			/* Clear book data */
-//			$overlay.hide($author);
+			$author.html('');
+			//Append director
+			$director.html('<p id="overlay-director">Directed by: ' + director + '</p>');
 
 		} // end if statement for type = movie
 
@@ -43,10 +47,7 @@
 		$image.attr('src', cover);
 
 		// Append title
-		$title.html('<p id="overlay-title">' + title + '</p>');
-
-		// Append year
-		$year.html('<p id="overlay-year">Year: ' + year + '</p>');
+		$title.html('<p id="overlay-title">' + title + ' (' + year + ')</p>');
 
 		//Append director
 
