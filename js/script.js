@@ -111,10 +111,9 @@ $(document).ready(function() {
 					cover = $(this).children().attr('src');
 					movieID = movies[index].imdbID;
 					console.log('movieID: ' + movieID);
+					getMoviePlot(movieID);
+					console.log('plot: ' + plot); // shows plot for previous movie. why?
 					openOverlay(movie);
-					plot = getMoviePlot(movieID);
-					console.log('plot: ' + plot); // shows plot for previous movie?
-
 				});
 
 				// Find movie plot using movie's ID
@@ -124,12 +123,9 @@ $(document).ready(function() {
 						var plotGetter = 'i=' + movieID + '&plot=short&r=json';
 						var omdbAPI = 'http://www.omdbapi.com/?';
 						$.getJSON(omdbAPI, plotGetter, function(plotResponse){
-							whatever = plotResponse.Plot;
-							console.log('plot response: ' + whatever);
-							return whatever;
+							plot = plotResponse.Plot;
+							console.log('plot response: ' + plot); // correct plot
 						});
-//
-					console.log('whatever again: ' + whatever);
 				};
 
 			}; // end displayMovies

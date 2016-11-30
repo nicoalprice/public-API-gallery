@@ -1,4 +1,3 @@
-
 /*** OVERLAY ***/
 
 	var $overlay = $('<div id="overlay"></div>');
@@ -26,10 +25,8 @@
 
 //		// If book is clicked...
 		if (type == book) {
-
 			// Append author name
 			$author.html('<p id="overlay-author">Author: ' + author + '</p>');
-//
 		} // end if statement for type = book
 
 		// If movie is clicked...
@@ -38,7 +35,7 @@
 //			$overlay.hide($author);
 
 			/* get plot */
-		$plot.html('<p id="overlay-plot">Plot: ' + plot + '</p>');
+			$plot.html('<p id="overlay-plot">Plot: ' + plot + '</p>');
 
 
 		} // end if statement for type = movie
