@@ -18,7 +18,7 @@
 		$("body").append($overlay);
 		$overlay.append($wrapper);
 		/* Stop click from opening img url */
-//		event.preventDefault();
+		event.preventDefault();
 
 		$wrapper.append($text);
 		$text.append($title);
