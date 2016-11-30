@@ -98,7 +98,7 @@
 	/* Hide overlay when esc key is pressed */
 	$("body").keydown(function(event) {
 		if (event.which == 27) {
-			$overlay.fadeOut(1000).hide();
+			$overlay.fadeOut(1500).hide();
 		}
 	});
 
