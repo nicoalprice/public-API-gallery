@@ -13,46 +13,42 @@
 	var $nextArrow = $('<div id="nextArrow"><img src="img/right-arrow.svg" alt="next" /></div>');
 
 	/* Function to open overlay */
-	function openOverlay(type) {
-		/* Add overlay to body of index.html */
-		$("body").append($overlay);
-		$overlay.append($wrapper);
+	function openOverlay(searchType) {
 		/* Stop click from opening img url */
 		event.preventDefault();
 
+		/* Add overlay to body of index.html */
+		$("body").append($overlay);
+		$overlay.append($wrapper);
 		$wrapper.append($text);
+
+		// Append cover image
+		$image.attr('src', cover);
+		// Append title
 		$text.append($title);
-		$text.append($director);
-		$text.append($author);
-		$text.append($plot);
+		$title.html('<p id="overlay-title">' + title + ' (' + year + ')</p>');
 
 	// If book is clicked...
-		if (type === book) {
+		if (searchType == 'book') {
 			// Clear movie data
-			$director.html('');
+			$director.detach();
+			$plot.detach();
 			// Append author name
+			$text.append($author);
 			$author.html('<p id="overlay-author">Author: ' + author + '</p>');
 		} // end if statement for type = book
 
 		// If movie is clicked...
-		if (type === movie) {
+		if (searchType == 'movie') {
 			/* Clear book data */
-			$author.html('');
+			$author.detach();
 			//Append director
+			$text.append($director);
 			$director.html('<p id="overlay-director">Directed by: ' + director + '</p>');
-
+			// Append plot
+			$text.append($plot);
+			$plot.html('<p id="overlay-plot">' + plot + '</p>');
 		} // end if statement for type = movie
-
-		// Append cover image
-		$image.attr('src', cover);
-
-		// Append title
-		$title.html('<p id="overlay-title">' + title + ' (' + year + ')</p>');
-
-		//Append director
-
-		// Append plot
-		$plot.html('<p id="overlay-plot">' + plot + '</p>');
 
 		/* add exit button. */
 		$overlay.append($exit);
