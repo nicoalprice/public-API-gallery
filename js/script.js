@@ -118,14 +118,24 @@ $(document).ready(function() {
 
 				// Find movie plot using movie's ID
 				function getMoviePlot(movieID) {
-					var whatever;
 					// Send AJAX request
-						var plotGetter = 'i=' + movieID + '&plot=short&r=json';
-						var omdbAPI = 'http://www.omdbapi.com/?';
-						$.getJSON(omdbAPI, plotGetter, function(plotResponse){
-							plot = plotResponse.Plot;
+//					var plotGetter = 'i=' + movieID + '&plot=short&r=json';
+//					var omdbAPI = 'http://www.omdbapi.com/?';
+					var plotURL = 'https://www.omdbapi.com/?i=' + movieID + '&plot=short&r=json';
+
+					$.ajax({
+						method: 'GET',
+						url: plotURL,
+						async: false, // wait for response before setting plot value
+						dataType: 'json',
+						success: function(data) {
+							plot = data.Plot;
+							director = data.Director;
 							console.log('plot response: ' + plot); // correct plot
-						});
+							console.log('director: ' + director);
+						}
+					}); // end ajax request
+
 				};
 
 			}; // end displayMovies

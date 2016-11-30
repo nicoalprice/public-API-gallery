@@ -3,6 +3,7 @@
 	var $overlay = $('<div id="overlay"></div>');
 	var $wrapper = $('<div id="overlay-wrapper"></div>');
 	var $image = $('<img id="overlay-image">');
+	var $text = $('<div id="overlay-text"></div');
 	var $title = $('<p id="overlay-title"></p>');
 	var $author = $('<p id="overlay-author"></p>');
 	var $year = $('<p id="overlay-year"></p>');
@@ -19,14 +20,15 @@
 		/* Stop click from opening img url */
 		event.preventDefault();
 
-		$wrapper.append($title);
-		$wrapper.append($year);
-		$wrapper.append($plot);
+		$wrapper.append($text);
+		$text.append($title);
+		$text.append($year);
+		$text.append($plot);
 
 	// If book is clicked...
 		if (type == book) {
 			// Append author name
-			$wrapper.append($author);
+			$text.append($author);
 			$author.html('<p id="overlay-author">Author: ' + author + '</p>');
 		} // end if statement for type = book
 
