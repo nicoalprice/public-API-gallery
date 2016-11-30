@@ -67,7 +67,6 @@ $(document).ready(function() {
 					cover = $(this).children().attr('src');
 					console.log('author: ' + author);
 					openOverlay('book');
-					alert('openOverlay(book)');
 				});
 			}; // end displayBooks
 
