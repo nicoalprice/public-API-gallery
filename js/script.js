@@ -1,14 +1,17 @@
-$(document).ready(function() {
-	// Global Variables
+// Global Variables
 	var book;
 	var movie;
 	var books = [];
 	var movies = [];
 	var title;
 	var cover;
+	var movieID;
+	var plot;
 	var author;
 	var year;
 	var index;
+
+$(document).ready(function() {
 
 	// User enters a search term
 	// When user hits enter key...
@@ -103,9 +106,28 @@ $(document).ready(function() {
 				$('#gallery li').click(function(){
 					index = $(this).attr('class');
 					console.log('movie index: ' + index);
+					title = movies[index].Title;
+					year = movies[index].Year;
 					cover = $(this).children().attr('src');
+					movieID = movies[index].imdbID;
+					console.log('movieID: ' + movieID);
+					getMoviePlot(movieID);
+					console.log('plot: ' + plot);
 					openOverlay(movie);
 				});
+
+				// Find movie plot using movie's ID
+				function getMoviePlot(movieID) {
+					// Send AJAX request
+						var plotGetter = 'i=' + movieID + '&plot=short&r=json';
+						var omdbAPI = 'http://www.omdbapi.com/?';
+						$.getJSON(omdbAPI, plotGetter, returnPlot);
+
+					function returnPlot(plotResponse) {
+							console.log('plot response: ' + plotResponse.Plot);
+							plot = plotResponse.Plot;
+						};
+				};
 			}; // end displayMovies
 
 
@@ -140,6 +162,7 @@ $(document).ready(function() {
 	var $title = $('<p id="overlay-title"></p>');
 	var $author = $('<p id="overlay-author"></p>');
 	var $year = $('<p id="overlay-year"></p>');
+	var $plot = $('<p id="overlay-plot"></p>');
 	var $exit = $('<div id="exit"><img src="img/close-button.svg" alt="exit"></div>');
 	var $prevArrow = $('<div id="prevArrow"><img src="img/left-arrow.svg" alt="previous" /></div>');
 	var $nextArrow = $('<div id="nextArrow"><img src="img/right-arrow.svg" alt="next" /></div>');
@@ -155,6 +178,7 @@ $(document).ready(function() {
 		$overlay.append($title);
 		$overlay.append($author);
 		$overlay.append($year);
+		$overlay.append($plot);
 
 //		// If book is clicked...
 		if (type == book) {
@@ -166,13 +190,11 @@ $(document).ready(function() {
 
 		// If movie is clicked...
 		else if (type == movie) {
-
-			title = movies[index].Title;
-			year = movies[index].Year;
 			/* Clear book data */
 //			$overlay.hide($author);
 
 			/* get plot */
+			$plot.append(plot);
 
 		} // end if statement for type = movie
 
@@ -184,8 +206,6 @@ $(document).ready(function() {
 
 		// Append year
 		$year.html('<p id="overlay-year">Year: ' + year + '</p>');
-
-
 
 		/* add exit button. */
 		$overlay.append($exit);
