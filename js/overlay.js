@@ -1,6 +1,7 @@
 /*** OVERLAY ***/
 
 	var $overlay = $('<div id="overlay"></div>');
+	var $wrapper = $('<div id="overlay-wrapper"></div>');
 	var $image = $('<img id="overlay-image">');
 	var $title = $('<p id="overlay-title"></p>');
 	var $author = $('<p id="overlay-author"></p>');
@@ -14,18 +15,18 @@
 	function openOverlay(type) {
 		/* Add overlay to body of index.html */
 		$("body").append($overlay);
+		$overlay.append($wrapper);
 		/* Stop click from opening img url */
 		event.preventDefault();
 
-		$overlay.append($image);
-		$overlay.append($title);
-		$overlay.append($author);
-		$overlay.append($year);
-		$overlay.append($plot);
+		$wrapper.append($title);
+		$wrapper.append($year);
+		$wrapper.append($plot);
 
-//		// If book is clicked...
+	// If book is clicked...
 		if (type == book) {
 			// Append author name
+			$wrapper.append($author);
 			$author.html('<p id="overlay-author">Author: ' + author + '</p>');
 		} // end if statement for type = book
 
@@ -33,10 +34,6 @@
 		else if (type == movie) {
 			/* Clear book data */
 //			$overlay.hide($author);
-
-			/* get plot */
-			$plot.html('<p id="overlay-plot">Plot: ' + plot + '</p>');
-
 
 		} // end if statement for type = movie
 
@@ -49,6 +46,9 @@
 		// Append year
 		$year.html('<p id="overlay-year">Year: ' + year + '</p>');
 
+		// Append plot
+		$plot.html('<p id="overlay-plot">Plot: ' + plot + '</p>');
+
 		/* add exit button. */
 		$overlay.append($exit);
 
@@ -56,10 +56,7 @@
 //		updateImage(cover, title);
 
 		/* add image to overlay */
-		$overlay.append($image);
-
-		/* add text captions to the images when viewed in the lightbox. */
-		$overlay.append(title);
+		$wrapper.append($image);
 
 		/* add back and forward navigation buttons when lightbox is visible */
 		$image.after($prevArrow);
