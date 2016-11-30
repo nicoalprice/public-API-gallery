@@ -8,6 +8,7 @@
 	var movieID;
 	var plot;
 	var author;
+	var director;
 	var year;
 	var index;
 
@@ -65,7 +66,8 @@ $(document).ready(function() {
 					year = books[index].first_publish_year;
 					cover = $(this).children().attr('src');
 					console.log('author: ' + author);
-					openOverlay(book);
+					openOverlay('book');
+					alert('openOverlay(book)');
 				});
 			}; // end displayBooks
 
@@ -110,17 +112,13 @@ $(document).ready(function() {
 					year = movies[index].Year;
 					cover = $(this).children().attr('src');
 					movieID = movies[index].imdbID;
-					console.log('movieID: ' + movieID);
 					getMoviePlot(movieID);
-					console.log('plot: ' + plot); // shows plot for previous movie. why?
-					openOverlay(movie);
+					openOverlay('movie');
 				});
 
 				// Find movie plot using movie's ID
 				function getMoviePlot(movieID) {
 					// Send AJAX request
-//					var plotGetter = 'i=' + movieID + '&plot=short&r=json';
-//					var omdbAPI = 'http://www.omdbapi.com/?';
 					var plotURL = 'https://www.omdbapi.com/?i=' + movieID + '&plot=short&r=json';
 
 					$.ajax({
@@ -131,12 +129,11 @@ $(document).ready(function() {
 						success: function(data) {
 							plot = data.Plot;
 							director = data.Director;
-							console.log('plot response: ' + plot); // correct plot
+							console.log('plot response: ' + plot);
 							console.log('director: ' + director);
 						}
-				}); // end ajax request
-
-				};
+					}); // end ajax request
+				}; // getMoviePlot
 
 			}; // end displayMovies
 
@@ -146,10 +143,10 @@ $(document).ready(function() {
 			// Book search url
 			var openLibraryAPI = 'https://openlibrary.org/search.json';
 			var bookSearch = $('input#search').serialize();
-
 			// AJAX request to OpenLibrary with search term
 			$.getJSON(openLibraryAPI, bookSearch, displayBooks);
 		}
+
 		// If movie search is checked
 		else if ($('input#movie-search').is(':checked')) {
 			// Movie search url
