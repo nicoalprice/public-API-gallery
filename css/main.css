@@ -157,34 +157,35 @@ p.author {
 
 #overlay-wrapper {
 	width: 90vw;
-	height: 90vh;
-	border: 2px solid yellow;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	align-content: center;
 	margin: auto;
-	position: relative;
 }
 
 #overlay-image {
-	position: absolute;
-	top: 0;
-	left: 50%:
-	width: 60vw;
+	height: 40vh;
 	margin: auto;
 	border-radius: 4px;
+	order: 1;
 }
 
 #overlay-text {
 	width: 100%;
-	height: 50%;
-	border: 1px solid red;
+	height: 300px;
+	margin: auto;
+	margin-top: 20px;
+	order: 2;
 }
-
 
 #overlay p {
 	display: block;
 	color: white;
-	width: 70%;
-	font-size: .75em;
-	margin: 10px auto 0;
+	width: 90%;
+	font-size: .9em;
+	margin: auto;
+	padding: 5px;
 }
 
 #prevArrow,

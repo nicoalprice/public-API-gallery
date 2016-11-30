@@ -43,13 +43,15 @@
 		$image.attr('src', cover);
 
 		// Append title
-		$title.html('<p id="overlay-title">Title: ' + title + '</p>');
+		$title.html('<p id="overlay-title">' + title + '</p>');
 
 		// Append year
 		$year.html('<p id="overlay-year">Year: ' + year + '</p>');
 
+		//Append director
+
 		// Append plot
-		$plot.html('<p id="overlay-plot">Plot: ' + plot + '</p>');
+		$plot.html('<p id="overlay-plot">' + plot + '</p>');
 
 		/* add exit button. */
 		$overlay.append($exit);
