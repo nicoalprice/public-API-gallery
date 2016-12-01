@@ -202,6 +202,7 @@ $(document).ready(function() {
 			// Book search url
 			var openLibraryAPI = 'https://openlibrary.org/search.json';
 			var bookSearch = $('input#search').serialize();
+			$('#author-sort').show();
 			// AJAX request to OpenLibrary with search term
 			$.getJSON(openLibraryAPI, bookSearch, displayBooks);
 		}
@@ -212,6 +213,8 @@ $(document).ready(function() {
 			var movieAPI = 'https://www.omdbapi.com/?';
 			// Get search terms
 			var movieSearch = 's=' + $('input#search').val();
+			// Hide author sort when movie is checked
+			$('#author-sort').hide();
 			// AJAX request to OMDB with search term
 			$.getJSON(movieAPI, movieSearch, displayMovies);
 		}
