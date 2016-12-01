@@ -1,4 +1,4 @@
-// Global Variables
+// Declare global variables
 	var book;
 	var movie;
 	var books = [];
@@ -11,8 +11,7 @@
 	var director;
 	var year;
 	var index;
-var response;
-var docs;
+
 $(document).ready(function() {
 
 	// User enters a search term
@@ -25,29 +24,41 @@ $(document).ready(function() {
 			function displayBooks(response) {
 				// Set variables for sorting
 				books = response.docs;
+				checkBookSort();
+				$('#sortby').change(function() {
+					checkBookSort();
+				}); // end change function
 
 				// Sort books when sort type is changed
-//				$('#sortby').change(function() {
-					// Sort array
-					if ($('option#title-sort').is(':selected')) {
-						var titleBooks = books.sort(sortByProperty('title'));
-						books = titleBooks;
-						alert('Title sort.');
-						trythis();
-					}
+				function checkBookSort() {
+						// Sort array
+						if ($('option#title-sort').is(':selected')) {
+							var titleBooks = books.sort(sortByProperty('title'));
+							books = titleBooks;
+							alert('Title sort.');
+							trythis();
+						}
 
-					else if ($('option#date-sort').is(':selected')){
-						var dateBooks = books.sort(sortByProperty('first_publish_year'));
-						books = dateBooks;
-						alert('Date sort.');
-						trythis();
-					}
+						else if ($('option#date-sort').is(':selected')){
+							var dateBooks = books.sort(sortByProperty('first_publish_year'));
+							books = dateBooks;
+							alert('Date sort.');
+							trythis();
+						}
 
-					else {
-						books = response.docs;
-						trythis();
-					}
-//				}); // end sortby change function
+						else if ($('option#author-sort').is(':selected')) {
+							var authorBooks = books.sort(sortByProperty('author_name'));
+							books = authorBooks;
+							alert('Author sort');
+							trythis();
+						}
+
+						else {
+							books = response.docs;
+							alert('Default.');
+							trythis();
+						}
+				}; // end checkBookSort
 
 
 			function trythis(){
@@ -100,22 +111,34 @@ $(document).ready(function() {
 			// Callback function to display movie search results
 			function displayMovies(response) {
 				movies = response.Search;
+				checkMovieSort();
+				// if user changes sort
+				$('#sortby').change(function() {
+					checkMovieSort();
+				}); // end change function
 
-				// Set variables for sorting
-				var titleMovies = movies.sort(sortByProperty('Title'));
-				var dateMovies = movies.sort(sortByProperty('Year'));
+				// Sort books when sort type is changed
+				function checkMovieSort() {
+						// Sort array
+						if ($('option#title-sort').is(':selected')) {
+							var titleMovies = movies.sort(sortByProperty('Title'));
+							movies = titleMovies;
+							processMovie();
+						}
 
-				// Sort movies when sort type is changed
-//				$('#sortby').change(function() {
-					// Sort array
-					if ($('#title-sort').is(':selected')) {
-						movies = titleMovies;
-					}
+						else if ($('option#date-sort').is(':selected')){
+							var dateMovies = movies.sort(sortByProperty('Year'));
+							movies = dateMovies;
+							processMovie();
+						}
 
-					if ($('#date-sort').is(':selected')){
-						movies = dateMovies;
-					}
-//				});
+						else {
+							movies = response.Search;
+							processMovie();
+						}
+				}; // end checkMovieSort
+
+				function processMovie() {
 
 				var movieHTML = '<ul>'; // start gallery list
 
@@ -174,6 +197,7 @@ $(document).ready(function() {
 						}
 					}); // end ajax request
 				}; // getMoviePlot
+				}; // end sort functions
 			}; // end displayMovies
 
 
@@ -200,6 +224,7 @@ $(document).ready(function() {
 
 	}); //end submit function
 
+	// Sort array by property
 	function sortByProperty(property) {
 		'use strict';
 		return function (a, b) {
