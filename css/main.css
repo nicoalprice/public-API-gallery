@@ -36,7 +36,8 @@ header {
 	text-align: center;
 	width: 100%;
 	margin: auto;
-	padding: 30px;
+	padding: 20px;
+	font-size: 1.2em;
 }
 
 #search-box {
@@ -259,6 +260,11 @@ p.author {
 ========================== */
 
 @media screen and (min-width: 450px) {
+
+	#page-title {
+		font-size: 2em;
+		padding: 30px;
+	}
 
 	#search-options {
 		flex-direction: row;
