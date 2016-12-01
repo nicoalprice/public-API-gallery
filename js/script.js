@@ -35,33 +35,29 @@ $(document).ready(function() {
 						if ($('option#title-sort').is(':selected')) {
 							var titleBooks = books.sort(sortByProperty('title'));
 							books = titleBooks;
-							alert('Title sort.');
-							trythis();
+							processBook();
 						}
 
 						else if ($('option#date-sort').is(':selected')){
 							var dateBooks = books.sort(sortByProperty('first_publish_year'));
 							books = dateBooks;
-							alert('Date sort.');
-							trythis();
+							processBook();
 						}
 
 						else if ($('option#author-sort').is(':selected')) {
 							var authorBooks = books.sort(sortByProperty('author_name'));
 							books = authorBooks;
-							alert('Author sort');
-							trythis();
+							processBook();
 						}
 
 						else {
 							books = response.docs;
-							alert('Default.');
-							trythis();
+							processBook();
 						}
 				}; // end checkBookSort
 
 
-			function trythis(){
+			function processBook(){
 				var bookHTML = '<ul>'; // start gallery list
 				if (response.numFound == 0) {
 						bookHTML += '<p id="no-results">No results found.</p>';
@@ -104,7 +100,7 @@ $(document).ready(function() {
 					console.log('author: ' + author);
 					openOverlay('book');
 				});
-			} // end try this
+			} // end processBook
 			}; // end displayBooks
 
 
