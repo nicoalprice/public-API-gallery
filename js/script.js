@@ -11,7 +11,8 @@
 	var director;
 	var year;
 	var index;
-
+var response;
+var docs;
 $(document).ready(function() {
 
 	// User enters a search term
@@ -22,9 +23,31 @@ $(document).ready(function() {
 
 			// Callback function to display book search results
 			function displayBooks(response) {
-				var bookHTML = '<ul>'; // start gallery list
 				books = response.docs;
-				console.log(books);
+				doallthis();
+
+				function doallthis() {
+
+				// Set variables for sorting
+				var titleBooks = books.sort(sortByProperty('title'));
+				var dateBooks = books.sort(sortByProperty('first_publish_year'));
+
+				// Sort books when sort type is changed
+				$('#sortby').change(function() {
+					// Sort array
+					if ($('option#title-sort').is(':selected')) {
+						books = titleBooks;
+					}
+
+					if ($('option#date-sort').is(':selected')){
+						books = dateBooks;
+					}
+
+					doallthis();
+				});
+
+				var bookHTML = '<ul>'; // start gallery list
+
 
 				if (response.numFound == 0) {
 						bookHTML += '<p id="no-results">No results found.</p>';
@@ -47,7 +70,6 @@ $(document).ready(function() {
 							}
 							bookHTML += ' alt="' + books[i].title + '"/></a>';
 							bookHTML += '<p class="title">' + books[i].title + '</p>';
-//							bookHTML += '<p class="author">' + books[i].author_name + '</p>';
 							bookHTML +='</li>';
 						} // end edition_key if statement
 					}; // end for loop
@@ -74,7 +96,22 @@ $(document).ready(function() {
 			// Callback function to display movie search results
 			function displayMovies(response) {
 				movies = response.Search;
-				console.log(movies);
+
+				// Set variables for sorting
+				var titleMovies = movies.sort(sortByProperty('Title'));
+				var dateMovies = movies.sort(sortByProperty('Year'));
+
+				// Sort movies when sort type is changed
+//				$('#sortby').change(function() {
+					// Sort array
+					if ($('#title-sort').is(':selected')) {
+						movies = titleMovies;
+					}
+
+					if ($('#date-sort').is(':selected')){
+						movies = dateMovies;
+					}
+//				});
 
 				var movieHTML = '<ul>'; // start gallery list
 
@@ -133,7 +170,7 @@ $(document).ready(function() {
 						}
 					}); // end ajax request
 				}; // getMoviePlot
-
+			}; // end doallthis
 			}; // end displayMovies
 
 
@@ -159,5 +196,19 @@ $(document).ready(function() {
 		}// end if statement for pressing Enter
 
 	}); //end submit function
+
+	function sortByProperty(property) {
+		'use strict';
+		return function (a, b) {
+			var sortStatus = 0;
+			if (a[property] < b[property]) {
+				sortStatus = -1;
+			} else if (a[property] > b[property]) {
+				sortStatus = 1;
+			}
+
+		return sortStatus;
+	};
+}
 
 }); //end ready

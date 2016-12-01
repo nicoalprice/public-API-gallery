@@ -72,12 +72,12 @@
 		nextImage();
 	});
 
-//	/* When right arrow key is pressed... */
-//	$("body").keydown(function(event){
-//		if ( event.which == 39 ) {
-//			nextImage();
-//	  }
-//	});
+	/* When right arrow key is pressed... */
+	$("body").keydown(function(event){
+		if ( event.which == 39 ) {
+			nextImage();
+	  }
+	});
 //
 //	/* When the previous button is clicked... */
 //	$prevArrow.on("click", function(event){
@@ -119,8 +119,11 @@
 		if (index >= $("#gallery li").length) {
 			index = 0;
 		}
-
+		var nextImage = $('#gallery li').hasClass(index);
+		var imageLocation = $(nextImage).attr('src');
 		title = movies[index].Title;
+
+		updateImage();
 
 		};
 
