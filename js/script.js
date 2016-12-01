@@ -23,32 +23,35 @@ $(document).ready(function() {
 
 			// Callback function to display book search results
 			function displayBooks(response) {
-				books = response.docs;
-				doallthis();
-
-				function doallthis() {
-
 				// Set variables for sorting
-				var titleBooks = books.sort(sortByProperty('title'));
-				var dateBooks = books.sort(sortByProperty('first_publish_year'));
+				books = response.docs;
 
 				// Sort books when sort type is changed
-				$('#sortby').change(function() {
+//				$('#sortby').change(function() {
 					// Sort array
 					if ($('option#title-sort').is(':selected')) {
+						var titleBooks = books.sort(sortByProperty('title'));
 						books = titleBooks;
+						alert('Title sort.');
+						trythis();
 					}
 
-					if ($('option#date-sort').is(':selected')){
+					else if ($('option#date-sort').is(':selected')){
+						var dateBooks = books.sort(sortByProperty('first_publish_year'));
 						books = dateBooks;
+						alert('Date sort.');
+						trythis();
 					}
 
-					doallthis();
-				});
+					else {
+						books = response.docs;
+						trythis();
+					}
+//				}); // end sortby change function
 
+
+			function trythis(){
 				var bookHTML = '<ul>'; // start gallery list
-
-
 				if (response.numFound == 0) {
 						bookHTML += '<p id="no-results">No results found.</p>';
 				}
@@ -90,6 +93,7 @@ $(document).ready(function() {
 					console.log('author: ' + author);
 					openOverlay('book');
 				});
+			} // end try this
 			}; // end displayBooks
 
 
@@ -170,7 +174,6 @@ $(document).ready(function() {
 						}
 					}); // end ajax request
 				}; // getMoviePlot
-			}; // end doallthis
 			}; // end displayMovies
 
 
