@@ -15,12 +15,21 @@
 		<header>
 			<h1 id="page-title">Book & Movie Search</h1>
 				<form id="search-box">
-				<input id="search" name="q" placeholder="Search..." type="search">
-			</form>
-			<div id="radio-buttons">
-				<input id="book-search" type="radio" name="search-type" value="book-search"><label for="book-search">Book</label>
-				<input id="movie-search" type="radio" name="search-type" value="movie-search"><label for="movie-search">Movie</label>
-			</div>
+					<input id="search" name="q" placeholder="Search..." type="search">
+					<span id="search-options">
+						<div id="radio-buttons">
+							<span class="radio-button"><input id="book-search" type="radio" name="search-type" value="book-search"><label for="book-search">Book</label></span>
+							<span class="radio-button"><input id="movie-search" type="radio" name="search-type" value="movie-search"><label for="movie-search">Movie</label></span>
+						</div>
+						<select id="sortby">
+							<option id="sort-label" value="sort" disabled selected>Sort By...</option>
+							<option id="title-sort" value="title">Title</option>
+							<option id="author-sort" value="author">Author</option>
+							<option id="date-sort" value="date">Date</option>
+						</select>
+					</span>
+				</form>
+
 		</header>
 
 		<div class="wrapper">

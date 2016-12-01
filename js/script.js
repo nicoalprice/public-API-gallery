@@ -1,4 +1,4 @@
-// Global Variables
+// Declare global variables
 	var book;
 	var movie;
 	var books = [];
@@ -22,10 +22,43 @@ $(document).ready(function() {
 
 			// Callback function to display book search results
 			function displayBooks(response) {
-				var bookHTML = '<ul>'; // start gallery list
+				// Set variables for sorting
 				books = response.docs;
-				console.log(books);
+				checkBookSort();
+				$('#sortby').change(function() {
+					checkBookSort();
+				}); // end change function
 
+				// Sort books when sort type is changed
+				function checkBookSort() {
+						// Sort array
+						if ($('option#title-sort').is(':selected')) {
+							var titleBooks = books.sort(sortByProperty('title'));
+							books = titleBooks;
+							processBook();
+						}
+
+						else if ($('option#date-sort').is(':selected')){
+							var dateBooks = books.sort(sortByProperty('first_publish_year'));
+							books = dateBooks;
+							processBook();
+						}
+
+						else if ($('option#author-sort').is(':selected')) {
+							var authorBooks = books.sort(sortByProperty('author_name'));
+							books = authorBooks;
+							processBook();
+						}
+
+						else {
+							books = response.docs;
+							processBook();
+						}
+				}; // end checkBookSort
+
+
+			function processBook(){
+				var bookHTML = '<ul>'; // start gallery list
 				if (response.numFound == 0) {
 						bookHTML += '<p id="no-results">No results found.</p>';
 				}
@@ -47,7 +80,6 @@ $(document).ready(function() {
 							}
 							bookHTML += ' alt="' + books[i].title + '"/></a>';
 							bookHTML += '<p class="title">' + books[i].title + '</p>';
-//							bookHTML += '<p class="author">' + books[i].author_name + '</p>';
 							bookHTML +='</li>';
 						} // end edition_key if statement
 					}; // end for loop
@@ -68,13 +100,41 @@ $(document).ready(function() {
 					console.log('author: ' + author);
 					openOverlay('book');
 				});
+			} // end processBook
 			}; // end displayBooks
 
 
 			// Callback function to display movie search results
 			function displayMovies(response) {
 				movies = response.Search;
-				console.log(movies);
+				checkMovieSort();
+				// if user changes sort
+				$('#sortby').change(function() {
+					checkMovieSort();
+				}); // end change function
+
+				// Sort books when sort type is changed
+				function checkMovieSort() {
+						// Sort array
+						if ($('option#title-sort').is(':selected')) {
+							var titleMovies = movies.sort(sortByProperty('Title'));
+							movies = titleMovies;
+							processMovie();
+						}
+
+						else if ($('option#date-sort').is(':selected')){
+							var dateMovies = movies.sort(sortByProperty('Year'));
+							movies = dateMovies;
+							processMovie();
+						}
+
+						else {
+							movies = response.Search;
+							processMovie();
+						}
+				}; // end checkMovieSort
+
+				function processMovie() {
 
 				var movieHTML = '<ul>'; // start gallery list
 
@@ -133,7 +193,7 @@ $(document).ready(function() {
 						}
 					}); // end ajax request
 				}; // getMoviePlot
-
+				}; // end sort functions
 			}; // end displayMovies
 
 
@@ -159,5 +219,20 @@ $(document).ready(function() {
 		}// end if statement for pressing Enter
 
 	}); //end submit function
+
+	// Sort array by property
+	function sortByProperty(property) {
+		'use strict';
+		return function (a, b) {
+			var sortStatus = 0;
+			if (a[property] < b[property]) {
+				sortStatus = -1;
+			} else if (a[property] > b[property]) {
+				sortStatus = 1;
+			}
+
+		return sortStatus;
+	};
+}
 
 }); //end ready
