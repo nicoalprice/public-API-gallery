@@ -69,7 +69,7 @@ $(document).ready(function() {
 						// If edition_key exists
 						if (books[i].edition_key != undefined) {
 							bookHTML += '<li class="' + i +'">';
-							bookHTML += '<a href="http://openlibrary.org/books/';
+							bookHTML += '<a class="' + i +'" href="http://openlibrary.org/books/';
 							bookHTML += books[i].edition_key[0]+ '" target="_blank">';
 							bookHTML += '<img src='
 							if (books[i].cover_edition_key != undefined) {
@@ -91,7 +91,7 @@ $(document).ready(function() {
 				$('#gallery').html(bookHTML); //display books
 
 				// If gallery li is clicked
-				$('#gallery li').click(function(event) {
+				$('#gallery li a').click(function(event) {
 					event.PreventDefault;
 					index = $(this).attr('class');
 					setItemDetails(index, 'book');
