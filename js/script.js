@@ -212,27 +212,30 @@ $(document).ready(function() {
 		};
 	};	// end sortByProperty
 
+}); //end ready
 
-	// Find movie plot using movie's ID
+/***** GLOBAL FUNCTIONS *****/
+
+// Find movie plot using movie's ID
 	function getMoviePlot(movieID) {
-			// Send AJAX request
-			var plotURL = 'https://www.omdbapi.com/?i=' + movieID + '&plot=short&r=json';
+		// Send AJAX request
+		var plotURL = 'https://www.omdbapi.com/?i=' + movieID + '&plot=short&r=json';
 
-			$.ajax({
-				method: 'GET',
-				url: plotURL,
-				async: false, // wait for response before setting plot value
-				dataType: 'json',
-				success: function(data) {
-					plot = data.Plot;
-					director = data.Director;
-					console.log('plot response: ' + plot);
-					console.log('director: ' + director);
-				}
-			}); // end ajax request
+		$.ajax({
+			method: 'GET',
+			url: plotURL,
+			async: false, // wait for response before setting plot value
+			dataType: 'json',
+			success: function(data) {
+				plot = data.Plot;
+				director = data.Director;
+				console.log('plot response: ' + plot);
+				console.log('director: ' + director);
+			}
+		}); // end ajax request
 	}; // getMoviePlot
 
-	function setItemDetails(itemIndex, itemType) {
+function setItemDetails(itemIndex, itemType) {
 		if (itemType == 'book') {
 			console.log(books);
 			title = books[itemIndex].title;
@@ -259,6 +262,4 @@ $(document).ready(function() {
 			movieID = movies[itemIndex].imdbID;
 			getMoviePlot(movieID);
 		}
-	}; // end setBookDetails
-
-}); //end ready
+	}; // end setItemDetails

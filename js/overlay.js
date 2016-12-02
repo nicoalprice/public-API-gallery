@@ -21,40 +21,13 @@
 		$("body").append($overlay);
 		$overlay.append($wrapper);
 		$wrapper.append($text);
-
-		// Append cover image
-		$image.attr('src', cover);
-		// Append title
-		$text.append($title);
-		$title.html('<p id="overlay-title">' + title + ' (' + year + ')</p>');
-
-	// If book is clicked...
-		if (searchType == 'book') {
-			// Clear movie data
-			$director.detach();
-			$plot.detach();
-			// Append author name
-			$text.append($author);
-			$author.html('<p id="overlay-author">Author: ' + author + '</p>');
-		} // end if statement for type = book
-
-		// If movie is clicked...
-		if (searchType == 'movie') {
-			/* Clear book data */
-			$author.detach();
-			//Append director
-			$text.append($director);
-			$director.html('<p id="overlay-director">Directed by: ' + director + '</p>');
-			// Append plot
-			$text.append($plot);
-			$plot.html('<p id="overlay-plot">' + plot + '</p>');
-		} // end if statement for type = movie
+		updateOverlay(searchType);
 
 		/* add exit button. */
 		$overlay.append($exit);
 
 		 /* call function to capture info for the clicked image */
-		updateImage(cover, title);
+//		updateImage(cover, title);
 
 		/* add image to overlay */
 		$wrapper.append($image);
@@ -67,18 +40,46 @@
 		$overlay.fadeIn(1500);
 	}; // end openOverlay()
 
+function updateOverlay(searchType) {
+	// Append cover image
+	$image.attr('src', cover);
+	// Append title
+	$text.append($title);
+	$title.html('<p id="overlay-title">' + title + ' (' + year + ')</p>');
+
+	// If book is clicked...
+	if (searchType == 'book') {
+		// Clear movie data
+		$director.detach();
+		$plot.detach();
+		// Append author name
+		$text.append($author);
+		$author.html('<p id="overlay-author">Author: ' + author + '</p>');
+	} // end if statement for type = book
+
+	// If movie is clicked...
+	if (searchType == 'movie') {
+		/* Clear book data */
+		$author.detach();
+		//Append director
+		$text.append($director);
+		$director.html('<p id="overlay-director">Directed by: ' + director + '</p>');
+		// Append plot
+		$text.append($plot);
+		$plot.html('<p id="overlay-plot">' + plot + '</p>');
+	} // end if statement for type = movie
+}; // end updateOverlay
+
 	/* When the next button is clicked... */
 	$nextArrow.on("click", function(event) {
 		nextImage();
-		alert('arrow');
 	});
 
 	/* When right arrow key is pressed... */
 	$("body").keydown(function(event){
 		if ( event.which == 39 ) {
-			alert('arrow');
 			nextImage();
-	  }
+		}
 	});
 
 	/* When the previous button is clicked... */
@@ -87,10 +88,10 @@
 	});
 
 	/* When left arrow key is pressed... */
-	$("body").keydown(function(event){
+	$("body").keydown(function(event) {
 		if ( event.which == 37 ) {
 			previousImage();
-	  }
+		  }
 	});
 
 	/* Hide overlay when exit button is clicked. */
@@ -105,47 +106,42 @@
 		}
 	});
 
-	/*** OVERLAY FUNCTIONS ***/
+/***** OVERLAY FUNCTIONS *****/
 
-	function updateImage(imageLocation, title) {
-		/* update image source */
-		$image.attr("src", imageLocation);
-		/* set caption text */
-		$title.text(title);
+function nextImage() {
+	/* update index */
+	index++;
+	/* loop up to first image in gallery */
+	if (index >= $("#gallery li").length) {
+		index = 0;
 	}
 
-	function nextImage() {
-		 /* update index */
-		index++;
-		/* loop up to first image in gallery */
-		if (index >= $("#gallery li").length) {
-			index = 0;
-		}
-
-		/* use index to get next image */
-		var nextImage = $("#gallery li").get(index).getElementsByTagName("li");
-		/* get new image location and caption */
-		var imageLocation = $(nextImage).attr("src");
-		var bookTitle =  $(nextImage).children("img").attr("alt");
-		title = books[index].title;
-
-		updateImage(imageLocation, bookTitle);
-	};
+	if ($('input#book-search').is(":checked")) {
+		setItemDetails(index, 'book');
+	}
+	// If movie search is checked
+	else if ($('input#movie-search').is(':checked')) {
+		setItemDetails(index, 'movie');
+	}
+	updateOverlay();
+};
 
 
-	function previousImage() {
-		/* update the index */
-		index--;
-		/* loop back to last image in gallery */
-		if (index < 0) {
-			index = $("#gallery li").length - 1;
-		}
-		/* get the previous image by index */
-		var prevImage = $("#gallery li").get(index).getElementsByTagName("img");
-		/* update the image location and caption */
-		var imageLocation = $(prevImage).attr("src");
-		var bookTitle =  $(prevImage).children("img").attr("alt");
-		/* update the overlay */
-		updateImage(imageLocation, bookTitle);
-	};
-	// end overlay code
+function previousImage() {
+	/* update the index */
+	index--;
+	/* loop back to last image in gallery */
+	if (index < 0) {
+		index = $("#gallery li").length - 1;
+	}
+
+	if ($('input#book-search').is(":checked")) {
+		setItemDetails(index, 'book');
+	}
+	// If movie search is checked
+	else if ($('input#movie-search').is(':checked')) {
+		setItemDetails(index, 'movie');
+	}
+
+	updateOverlay();
+}; // end previousImage
