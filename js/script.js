@@ -220,7 +220,7 @@ function setItemDetails(itemIndex, itemType) {
 	if (itemType == 'book') {
 		cover = $(this).children().attr('src');
 		if (books[itemIndex].cover_edition_key != undefined) {
-			cover = 'http://covers.openlibrary.org/b/olid/' + books[itemIndex].cover_edition_key + '-M.jpg';
+			cover = 'https://covers.openlibrary.org/b/olid/' + books[itemIndex].cover_edition_key + '-M.jpg';
 		}
 		else { // Display default cover image
 			cover = 'img/no-cover.png';
