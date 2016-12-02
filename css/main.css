@@ -122,10 +122,6 @@ input[type=radio] {
 	width: 100%;
 }
 
-#gallery {
-	font-family: 'Sahitya', serif;
-}
-
 #gallery li:hover {
 	opacity: 0.6;
 }
