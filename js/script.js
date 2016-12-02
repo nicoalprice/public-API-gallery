@@ -56,7 +56,6 @@ $(document).ready(function() {
 						}
 				}; // end checkBookSort
 
-
 			function processBook(){
 				var bookHTML = '<ul>'; // start gallery list
 				if (response.numFound == 0) {
@@ -111,27 +110,26 @@ $(document).ready(function() {
 
 				// Sort books when sort type is changed
 				function checkMovieSort() {
-						// Sort array
-						if ($('option#title-sort').is(':selected')) {
-							var titleMovies = movies.sort(sortByProperty('Title'));
-							movies = titleMovies;
-							processMovie();
-						}
+					// Sort array
+					if ($('option#title-sort').is(':selected')) {
+						var titleMovies = movies.sort(sortByProperty('Title'));
+						movies = titleMovies;
+						processMovie();
+					}
 
-						else if ($('option#date-sort').is(':selected')){
-							var dateMovies = movies.sort(sortByProperty('Year'));
-							movies = dateMovies;
-							processMovie();
-						}
+					else if ($('option#date-sort').is(':selected')){
+						var dateMovies = movies.sort(sortByProperty('Year'));
+						movies = dateMovies;
+						processMovie();
+					}
 
-						else {
-							movies = response.Search;
-							processMovie();
-						}
-				}; // end checkMovieSort
+					else {
+						movies = response.Search;
+						processMovie();
+					}
+			}; // end checkMovieSort
 
-				function processMovie() {
-
+			function processMovie() {
 				var movieHTML = '<ul>'; // start gallery list
 
 				if (response.Response == false) {
@@ -162,13 +160,12 @@ $(document).ready(function() {
 				// If gallery li is clicked
 				$('#gallery li').click(function(){
 					index = $(this).attr('class');
-					console.log('movie index: ' + index);
 					setItemDetails(index, 'movie');
 					openOverlay('movie');
 				});
 
-				}; // end sort functions
-			}; // end displayMovies
+			}; // end processMovie
+		}; // end displayMovies
 
 
 		// If book search is checked
@@ -217,49 +214,49 @@ $(document).ready(function() {
 /***** GLOBAL FUNCTIONS *****/
 
 // Find movie plot using movie's ID
-	function getMoviePlot(movieID) {
-		// Send AJAX request
-		var plotURL = 'https://www.omdbapi.com/?i=' + movieID + '&plot=short&r=json';
+function getMoviePlot(movieID) {
+	// Send AJAX request
+	var plotURL = 'https://www.omdbapi.com/?i=' + movieID + '&plot=short&r=json';
 
-		$.ajax({
-			method: 'GET',
-			url: plotURL,
-			async: false, // wait for response before setting plot value
-			dataType: 'json',
-			success: function(data) {
-				plot = data.Plot;
-				director = data.Director;
-				console.log('plot response: ' + plot);
-				console.log('director: ' + director);
-			}
-		}); // end ajax request
-	}; // getMoviePlot
+	$.ajax({
+		method: 'GET',
+		url: plotURL,
+		async: false, // wait for response before setting plot value
+		dataType: 'json',
+		success: function(data) {
+			plot = data.Plot;
+			director = data.Director;
+			console.log('plot response: ' + plot);
+			console.log('director: ' + director);
+		}
+	}); // end ajax request
+}; // getMoviePlot
 
 function setItemDetails(itemIndex, itemType) {
-		if (itemType == 'book') {
-			console.log(books);
-			title = books[itemIndex].title;
-			author = books[itemIndex].author_name;
-			year = books[itemIndex].first_publish_year;
-			cover = $(this).children().attr('src');
-			if (books[itemIndex].cover_edition_key != undefined) {
-				cover = 'http://covers.openlibrary.org/b/olid/' + books[itemIndex].cover_edition_key + '-M.jpg';
-			}
-			else { // Display default cover image
-				cover = 'img/no-cover.png';
-			}
+	if (itemType == 'book') {
+		console.log(books);
+		title = books[itemIndex].title;
+		author = books[itemIndex].author_name;
+		year = books[itemIndex].first_publish_year;
+		cover = $(this).children().attr('src');
+		if (books[itemIndex].cover_edition_key != undefined) {
+			cover = 'http://covers.openlibrary.org/b/olid/' + books[itemIndex].cover_edition_key + '-M.jpg';
 		}
+		else { // Display default cover image
+			cover = 'img/no-cover.png';
+		}
+	}
 
-		if (itemType == 'movie') {
-			movieID = movies[itemIndex].imdbID;
-			getMoviePlot(movieID);
-			title = movies[itemIndex].Title;
-			year = movies[itemIndex].Year;
-			if (movies[itemIndex].Poster == "N/A") {
-				cover = 'img/no-cover.png';
-			}
-			else {
-				cover = movies[itemIndex].Poster;
-			}
+	if (itemType == 'movie') {
+		movieID = movies[itemIndex].imdbID;
+		getMoviePlot(movieID);
+		title = movies[itemIndex].Title;
+		year = movies[itemIndex].Year;
+		if (movies[itemIndex].Poster == "N/A") {
+			cover = 'img/no-cover.png';
 		}
-	}; // end setItemDetails
+		else {
+			cover = movies[itemIndex].Poster;
+		}
+	}
+}; // end setItemDetails
