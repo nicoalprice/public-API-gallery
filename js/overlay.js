@@ -119,7 +119,6 @@ function nextImage() {
 	else if ($('input#movie-search').is(':checked')) {
 		setItemDetails(index, 'movie');
 	}
-	updateOverlay();
 };
 
 
@@ -133,11 +132,11 @@ function previousImage() {
 
 	if ($('input#book-search').is(":checked")) {
 		setItemDetails(index, 'book');
+
 	}
 	// If movie search is checked
 	else if ($('input#movie-search').is(':checked')) {
 		setItemDetails(index, 'movie');
 	}
 
-	updateOverlay();
 }; // end previousImage

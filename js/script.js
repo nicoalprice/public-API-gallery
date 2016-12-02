@@ -31,29 +31,29 @@ $(document).ready(function() {
 
 				// Sort books when sort type is changed
 				function checkBookSort() {
-						// Sort array
-						if ($('option#title-sort').is(':selected')) {
-							var titleBooks = books.sort(sortByProperty('title'));
-							books = titleBooks;
-							processBook();
-						}
+					// Sort array
+					if ($('option#title-sort').is(':selected')) {
+						var titleBooks = books.sort(sortByProperty('title'));
+						books = titleBooks;
+						processBook();
+					}
 
-						else if ($('option#date-sort').is(':selected')){
-							var dateBooks = books.sort(sortByProperty('first_publish_year'));
-							books = dateBooks;
-							processBook();
-						}
+					else if ($('option#date-sort').is(':selected')){
+						var dateBooks = books.sort(sortByProperty('first_publish_year'));
+						books = dateBooks;
+						processBook();
+					}
 
-						else if ($('option#author-sort').is(':selected')) {
-							var authorBooks = books.sort(sortByProperty('author_name'));
-							books = authorBooks;
-							processBook();
-						}
+					else if ($('option#author-sort').is(':selected')) {
+						var authorBooks = books.sort(sortByProperty('author_name'));
+						books = authorBooks;
+						processBook();
+					}
 
-						else {
-							books = response.docs;
-							processBook();
-						}
+					else {
+						books = response.docs;
+						processBook();
+					}
 				}; // end checkBookSort
 
 			function processBook(){
@@ -103,6 +103,7 @@ $(document).ready(function() {
 			function displayMovies(response) {
 				movies = response.Search;
 				checkMovieSort();
+
 				// if user changes sort
 				$('#sortby').change(function() {
 					checkMovieSort();
@@ -213,25 +214,6 @@ $(document).ready(function() {
 
 /***** GLOBAL FUNCTIONS *****/
 
-// Find movie plot using movie's ID
-function getMoviePlot(movieID) {
-	// Send AJAX request
-	var plotURL = 'https://www.omdbapi.com/?i=' + movieID + '&plot=short&r=json';
-
-	$.ajax({
-		method: 'GET',
-		url: plotURL,
-		async: false, // wait for response before setting plot value
-		dataType: 'json',
-		success: function(data) {
-			plot = data.Plot;
-			director = data.Director;
-			console.log('plot response: ' + plot);
-			console.log('director: ' + director);
-		}
-	}); // end ajax request
-}; // getMoviePlot
-
 function setItemDetails(itemIndex, itemType) {
 	if (itemType == 'book') {
 		console.log(books);
@@ -245,18 +227,37 @@ function setItemDetails(itemIndex, itemType) {
 		else { // Display default cover image
 			cover = 'img/no-cover.png';
 		}
+		updateOverlay('book');
 	}
 
 	if (itemType == 'movie') {
 		movieID = movies[itemIndex].imdbID;
-		getMoviePlot(movieID);
-		title = movies[itemIndex].Title;
-		year = movies[itemIndex].Year;
-		if (movies[itemIndex].Poster == "N/A") {
-			cover = 'img/no-cover.png';
-		}
-		else {
-			cover = movies[itemIndex].Poster;
-		}
+		getMovieDetails(movieID);
+
+		function getMovieDetails(movieID) {
+			// Send AJAX request
+			var plotURL = 'https://www.omdbapi.com/?i=' + movieID + '&plot=short&r=json';
+
+			$.ajax({
+				method: 'GET',
+				url: plotURL,
+				dataType: 'json',
+				success: function(data) {
+					if (data.Poster == "N/A") {
+						cover = 'img/no-cover.png';
+					}
+					else {
+						cover = data.Poster;
+					}
+					title = data.Title;
+					year = data.Year;
+					director = data.Director;
+					plot = data.Plot;
+					console.log('plot response: ' + plot);
+					console.log('director: ' + director);
+					updateOverlay('movie');
+				}
+			}); // end ajax request
+		}; // getMovieDetails
 	}
 }; // end setItemDetails
