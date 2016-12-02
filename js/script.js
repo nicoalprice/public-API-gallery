@@ -67,8 +67,8 @@ $(document).ready(function() {
 					for (i=0; i<100; i++) {
 						// If edition_key exists
 						if (books[i].edition_key) {
-							bookHTML += '<li>';
-							bookHTML += '<a class="' + i + '" href="http://openlibrary.org/books/';
+							bookHTML += '<li class="' + i +'">';
+							bookHTML += '<a href="http://openlibrary.org/books/';
 							bookHTML += books[i].edition_key[0]+ '" target="_blank">';
 							bookHTML += '<img src='
 							if (books[i].cover_edition_key != undefined) {
@@ -90,14 +90,10 @@ $(document).ready(function() {
 				$('#gallery').html(bookHTML); //display books
 
 				// If gallery li is clicked
-				$('#gallery li a').click(function() {
+				$('#gallery li').click(function(event) {
+					event.PreventDefault;
 					index = $(this).attr('class');
-					console.log('index: ' + index);
-					title = books[index].title;
-					author = books[index].author_name;
-					year = books[index].first_publish_year;
-					cover = $(this).children().attr('src');
-					console.log('author: ' + author);
+					setItemDetails(index, 'book');
 					openOverlay('book');
 				});
 			} // end processBook
@@ -167,32 +163,10 @@ $(document).ready(function() {
 				$('#gallery li').click(function(){
 					index = $(this).attr('class');
 					console.log('movie index: ' + index);
-					title = movies[index].Title;
-					year = movies[index].Year;
-					cover = $(this).children().attr('src');
-					movieID = movies[index].imdbID;
-					getMoviePlot(movieID);
+					setItemDetails(index, 'movie');
 					openOverlay('movie');
 				});
 
-				// Find movie plot using movie's ID
-				function getMoviePlot(movieID) {
-					// Send AJAX request
-					var plotURL = 'https://www.omdbapi.com/?i=' + movieID + '&plot=short&r=json';
-
-					$.ajax({
-						method: 'GET',
-						url: plotURL,
-						async: false, // wait for response before setting plot value
-						dataType: 'json',
-						success: function(data) {
-							plot = data.Plot;
-							director = data.Director;
-							console.log('plot response: ' + plot);
-							console.log('director: ' + director);
-						}
-					}); // end ajax request
-				}; // getMoviePlot
 				}; // end sort functions
 			}; // end displayMovies
 
@@ -235,7 +209,56 @@ $(document).ready(function() {
 			}
 
 		return sortStatus;
-	};
-}
+		};
+	};	// end sortByProperty
+
+
+	// Find movie plot using movie's ID
+	function getMoviePlot(movieID) {
+			// Send AJAX request
+			var plotURL = 'https://www.omdbapi.com/?i=' + movieID + '&plot=short&r=json';
+
+			$.ajax({
+				method: 'GET',
+				url: plotURL,
+				async: false, // wait for response before setting plot value
+				dataType: 'json',
+				success: function(data) {
+					plot = data.Plot;
+					director = data.Director;
+					console.log('plot response: ' + plot);
+					console.log('director: ' + director);
+				}
+			}); // end ajax request
+	}; // getMoviePlot
+
+	function setItemDetails(itemIndex, itemType) {
+		if (itemType == 'book') {
+			console.log(books);
+			title = books[itemIndex].title;
+			author = books[itemIndex].author_name;
+			year = books[itemIndex].first_publish_year;
+			cover = $(this).children().attr('src');
+			if (books[itemIndex].cover_edition_key != undefined) {
+				cover = 'http://covers.openlibrary.org/b/olid/' + books[itemIndex].cover_edition_key + '-M.jpg';
+			}
+			else { // Display default cover image
+				cover = 'img/no-cover.png';
+			}
+		}
+
+		if (itemType == 'movie') {
+			title = movies[itemIndex].Title;
+			year = movies[itemIndex].Year;
+			if (movies[itemIndex].Poster == "N/A") {
+				cover = 'img/no-cover.png';
+			}
+			else {
+				cover = movies[itemIndex].Poster;
+			}
+			movieID = movies[itemIndex].imdbID;
+			getMoviePlot(movieID);
+		}
+	}; // end setBookDetails
 
 }); //end ready

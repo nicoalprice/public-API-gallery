@@ -54,7 +54,7 @@
 		$overlay.append($exit);
 
 		 /* call function to capture info for the clicked image */
-//		updateImage(cover, title);
+		updateImage(cover, title);
 
 		/* add image to overlay */
 		$wrapper.append($image);
@@ -70,26 +70,28 @@
 	/* When the next button is clicked... */
 	$nextArrow.on("click", function(event) {
 		nextImage();
+		alert('arrow');
 	});
 
 	/* When right arrow key is pressed... */
 	$("body").keydown(function(event){
 		if ( event.which == 39 ) {
+			alert('arrow');
 			nextImage();
 	  }
 	});
-//
-//	/* When the previous button is clicked... */
-//	$prevArrow.on("click", function(event){
-//		previousImage();
-//	});
-//
-//	/* When left arrow key is pressed... */
-//	$("body").keydown(function(event){
-//		if ( event.which == 37 ) {
-//			previousImage();
-//	  }
-//	});
+
+	/* When the previous button is clicked... */
+	$prevArrow.on("click", function(event){
+		previousImage();
+	});
+
+	/* When left arrow key is pressed... */
+	$("body").keydown(function(event){
+		if ( event.which == 37 ) {
+			previousImage();
+	  }
+	});
 
 	/* Hide overlay when exit button is clicked. */
 	$exit.on("click", function() {
@@ -104,14 +106,14 @@
 	});
 
 	/*** OVERLAY FUNCTIONS ***/
-//
-//	function updateImage(imageLocation, imageCaption) {
-//		/* update image source */
-//		$image.attr("src", imageLocation);
-//		/* set caption text */
-//		$caption.text(imageCaption);
-//	}
-//
+
+	function updateImage(imageLocation, title) {
+		/* update image source */
+		$image.attr("src", imageLocation);
+		/* set caption text */
+		$title.text(title);
+	}
+
 	function nextImage() {
 		 /* update index */
 		index++;
@@ -119,36 +121,31 @@
 		if (index >= $("#gallery li").length) {
 			index = 0;
 		}
-		var nextImage = $('#gallery li').hasClass(index);
-		var imageLocation = $(nextImage).attr('src');
-		title = movies[index].Title;
 
-		updateImage();
+		/* use index to get next image */
+		var nextImage = $("#gallery li").get(index).getElementsByTagName("li");
+		/* get new image location and caption */
+		var imageLocation = $(nextImage).attr("src");
+		var bookTitle =  $(nextImage).children("img").attr("alt");
+		title = books[index].title;
 
-		};
+		updateImage(imageLocation, bookTitle);
+	};
 
-//		/* use index to get next image */
-//		var nextImage = $("#gallery li").get(index).getElementsByTagName("a");
-//		/* get new image location and caption */
-//		var imageLocation = $(nextImage).attr("href");
-//		var imageCaption =  $(nextImage).children("img").attr("alt");
-//		/* update the overlay image */
-//		updateImage(imageLocation, imageCaption);
-//	}
-//
-//	function previousImage() {
-//		/* update the index */
-//		index--;
-//		/* loop back to last image in gallery */
-//		if (index < 0) {
-//			index = $("#gallery li").length - 1;
-//		}
-//		/* get the previous image by index */
-//		var prevImage = $("#gallery li").get(index).getElementsByTagName("a");
-//		/* update the image location and caption */
-//		var imageLocation = $(prevImage).attr("href");
-//		var imageCaption =  $(prevImage).children("img").attr("alt");
-//		/* update the overlay */
-//		updateImage(imageLocation, imageCaption);
-//	}
+
+	function previousImage() {
+		/* update the index */
+		index--;
+		/* loop back to last image in gallery */
+		if (index < 0) {
+			index = $("#gallery li").length - 1;
+		}
+		/* get the previous image by index */
+		var prevImage = $("#gallery li").get(index).getElementsByTagName("img");
+		/* update the image location and caption */
+		var imageLocation = $(prevImage).attr("src");
+		var bookTitle =  $(prevImage).children("img").attr("alt");
+		/* update the overlay */
+		updateImage(imageLocation, bookTitle);
+	};
 	// end overlay code
