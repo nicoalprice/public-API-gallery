@@ -3,7 +3,7 @@
 	var $overlay = $('<div id="overlay"></div>');
 	var $wrapper = $('<div id="overlay-wrapper"></div>');
 	var $image = $('<img id="overlay-image">');
-	var $text = $('<div id="overlay-text"></div');
+	var $text = $('<div id="overlay-t"></div');
 	var $title = $('<p></p>');
 	var $author = $('<p></p>');
 	var $director = $('<p></p>');
