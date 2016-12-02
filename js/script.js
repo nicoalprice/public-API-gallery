@@ -10,13 +10,15 @@
 	var author;
 	var director;
 	var year;
+	var publisher;
+	var publishPlace;
 	var index;
 
 $(document).ready(function() {
-
 	// User enters a search term
 	// When user hits enter key...
 	$('body').keypress(function(event) {
+
 		if (event.which == 13) { // enter
 			event.preventDefault();
 
@@ -65,7 +67,7 @@ $(document).ready(function() {
 				// Loop through search results
 					for (i=0; i<100; i++) {
 						// If edition_key exists
-						if (books[i].edition_key) {
+						if (books[i].edition_key != undefined) {
 							bookHTML += '<li class="' + i +'">';
 							bookHTML += '<a href="http://openlibrary.org/books/';
 							bookHTML += books[i].edition_key[0]+ '" target="_blank">';
@@ -96,7 +98,7 @@ $(document).ready(function() {
 					openOverlay('book');
 				});
 			} // end processBook
-			}; // end displayBooks
+		}; // end displayBooks
 
 
 			// Callback function to display movie search results
@@ -216,10 +218,6 @@ $(document).ready(function() {
 
 function setItemDetails(itemIndex, itemType) {
 	if (itemType == 'book') {
-		console.log(books);
-		title = books[itemIndex].title;
-		author = books[itemIndex].author_name;
-		year = books[itemIndex].first_publish_year;
 		cover = $(this).children().attr('src');
 		if (books[itemIndex].cover_edition_key != undefined) {
 			cover = 'http://covers.openlibrary.org/b/olid/' + books[itemIndex].cover_edition_key + '-M.jpg';
@@ -227,6 +225,17 @@ function setItemDetails(itemIndex, itemType) {
 		else { // Display default cover image
 			cover = 'img/no-cover.png';
 		}
+		title = books[itemIndex].title;
+		author = books[itemIndex].author_name;
+		year = books[itemIndex].first_publish_year;
+		publisher = books[itemIndex].publisher;
+		if (books[itemIndex].publish_place != undefined) {
+			publishPlace = ' (' + books[itemIndex].publish_place + ')';
+		}
+		else {
+			publishPlace = "";
+		}
+
 		updateOverlay('book');
 	}
 
@@ -253,11 +262,10 @@ function setItemDetails(itemIndex, itemType) {
 					year = data.Year;
 					director = data.Director;
 					plot = data.Plot;
-					console.log('plot response: ' + plot);
-					console.log('director: ' + director);
+
 					updateOverlay('movie');
 				}
 			}); // end ajax request
 		}; // getMovieDetails
-	}
 }; // end setItemDetails
+}

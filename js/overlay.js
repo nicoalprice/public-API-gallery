@@ -4,10 +4,11 @@
 	var $wrapper = $('<div id="overlay-wrapper"></div>');
 	var $image = $('<img id="overlay-image">');
 	var $text = $('<div id="overlay-text"></div');
-	var $title = $('<p id="overlay-title"></p>');
-	var $author = $('<p id="overlay-author"></p>');
-	var $director = $('<p id="overlay-director"></p>');
-	var $plot = $('<p id="overlay-plot"></p>');
+	var $title = $('<p></p>');
+	var $author = $('<p></p>');
+	var $director = $('<p></p>');
+	var $plot = $('<p></p>');
+	var $publisher = $('<p></p>');
 	var $exit = $('<div id="exit"><img src="img/close-button.svg" alt="exit"></div>');
 	var $prevArrow = $('<div id="prevArrow"><img src="img/left-arrow.svg" alt="previous" /></div>');
 	var $nextArrow = $('<div id="nextArrow"><img src="img/right-arrow.svg" alt="next" /></div>');
@@ -51,12 +52,17 @@ function updateOverlay(searchType) {
 		// Append author name
 		$text.append($author);
 		$author.html('<p id="overlay-author">Author: ' + author + '</p>');
+
+		// Append publisher and place
+		$text.append($publisher);
+		$publisher.html('<p id="overlay-publisher">Publisher: ' + publisher + publishPlace + '</p>');
 	} // end if statement for type = book
 
 	// If movie is clicked...
 	if (searchType == 'movie') {
 		/* Clear book data */
 		$author.detach();
+		$publisher.detach();
 		//Append director
 		$text.append($director);
 		$director.html('<p id="overlay-director">Directed by: ' + director + '</p>');
@@ -92,13 +98,13 @@ $("body").keydown(function(event) {
 
 /* Hide overlay when exit button is clicked. */
 $exit.on("click", function() {
-	$overlay.fadeOut(1000).hide();
+	$overlay.fadeOut(1000);
 });
 
 /* Hide overlay when esc key is pressed */
 $("body").keydown(function(event) {
 	if (event.which == 27) {
-		$overlay.fadeOut(1500).hide();
+		$overlay.fadeOut(1000);
 	}
 });
 
