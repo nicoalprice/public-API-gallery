@@ -251,6 +251,8 @@ function setItemDetails(itemIndex, itemType) {
 		}
 
 		if (itemType == 'movie') {
+			movieID = movies[itemIndex].imdbID;
+			getMoviePlot(movieID);
 			title = movies[itemIndex].Title;
 			year = movies[itemIndex].Year;
 			if (movies[itemIndex].Poster == "N/A") {
@@ -259,7 +261,5 @@ function setItemDetails(itemIndex, itemType) {
 			else {
 				cover = movies[itemIndex].Poster;
 			}
-			movieID = movies[itemIndex].imdbID;
-			getMoviePlot(movieID);
 		}
 	}; // end setItemDetails

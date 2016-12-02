@@ -12,39 +12,35 @@
 	var $prevArrow = $('<div id="prevArrow"><img src="img/left-arrow.svg" alt="previous" /></div>');
 	var $nextArrow = $('<div id="nextArrow"><img src="img/right-arrow.svg" alt="next" /></div>');
 
-	/* Function to open overlay */
-	function openOverlay(searchType) {
-		/* Stop click from opening img url */
-		event.preventDefault();
+/* Function to open overlay */
+function openOverlay(searchType) {
+	/* Stop click from opening img url */
+	event.preventDefault();
 
-		/* Add overlay to body of index.html */
-		$("body").append($overlay);
-		$overlay.append($wrapper);
-		$wrapper.append($text);
-		updateOverlay(searchType);
+	/* Add overlay to body of index.html */
+	$("body").append($overlay);
+	$overlay.append($wrapper);
+	$wrapper.append($image);
+	$wrapper.append($text);
+	$text.append($title);
+	updateOverlay(searchType);
 
-		/* add exit button. */
-		$overlay.append($exit);
+	/* add exit button. */
+	$overlay.append($exit);
 
-		 /* call function to capture info for the clicked image */
-//		updateImage(cover, title);
+	/* add back and forward navigation buttons when lightbox is visible */
+	$image.after($prevArrow);
+	$image.before($nextArrow);
 
-		/* add image to overlay */
-		$wrapper.append($image);
+	/* show the overlay */
+	$overlay.fadeIn(1500);
+}; // end openOverlay()
 
-		/* add back and forward navigation buttons when lightbox is visible */
-		$image.after($prevArrow);
-		$image.before($nextArrow);
-
-		/* show the overlay */
-		$overlay.fadeIn(1500);
-	}; // end openOverlay()
-
+// Update overlay on event
 function updateOverlay(searchType) {
 	// Append cover image
 	$image.attr('src', cover);
-	// Append title
-	$text.append($title);
+	// Append title and year
 	$title.html('<p id="overlay-title">' + title + ' (' + year + ')</p>');
 
 	// If book is clicked...
@@ -70,41 +66,41 @@ function updateOverlay(searchType) {
 	} // end if statement for type = movie
 }; // end updateOverlay
 
-	/* When the next button is clicked... */
-	$nextArrow.on("click", function(event) {
+/* When the next button is clicked... */
+$nextArrow.on("click", function(event) {
+	nextImage();
+});
+
+/* When right arrow key is pressed... */
+$("body").keydown(function(event){
+	if ( event.which == 39 ) {
 		nextImage();
-	});
+	}
+});
 
-	/* When right arrow key is pressed... */
-	$("body").keydown(function(event){
-		if ( event.which == 39 ) {
-			nextImage();
-		}
-	});
+/* When the previous button is clicked... */
+$prevArrow.on("click", function(event){
+	previousImage();
+});
 
-	/* When the previous button is clicked... */
-	$prevArrow.on("click", function(event){
+/* When left arrow key is pressed... */
+$("body").keydown(function(event) {
+	if ( event.which == 37 ) {
 		previousImage();
-	});
+	}
+});
 
-	/* When left arrow key is pressed... */
-	$("body").keydown(function(event) {
-		if ( event.which == 37 ) {
-			previousImage();
-		  }
-	});
+/* Hide overlay when exit button is clicked. */
+$exit.on("click", function() {
+	$overlay.fadeOut(1000).hide();
+});
 
-	/* Hide overlay when exit button is clicked. */
-	$exit.on("click", function() {
-		$overlay.fadeOut(1000).hide();
-	});
-
-	/* Hide overlay when esc key is pressed */
-	$("body").keydown(function(event) {
-		if (event.which == 27) {
-			$overlay.fadeOut(1500).hide();
-		}
-	});
+/* Hide overlay when esc key is pressed */
+$("body").keydown(function(event) {
+	if (event.which == 27) {
+		$overlay.fadeOut(1500).hide();
+	}
+});
 
 /***** OVERLAY FUNCTIONS *****/
 
