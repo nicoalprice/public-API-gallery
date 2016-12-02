@@ -15,10 +15,7 @@
 
 /* Function to open overlay */
 function openOverlay(searchType) {
-	/* Stop click from opening img url */
-//	event.preventDefault();
-
-	/* Add overlay to body of index.html */
+	  /* Add overlay to body of index.html */
 	$("body").append($overlay);
 	$overlay.append($wrapper);
 	$wrapper.append($image);

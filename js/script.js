@@ -15,6 +15,7 @@
 	var index;
 
 $(document).ready(function() {
+	$('input#book-search').prop('checked', true);
 	// User enters a search term
 	// When user hits enter key...
 	$('body').keypress(function(event) {
@@ -34,6 +35,7 @@ $(document).ready(function() {
 
 		// If movie search is checked
 		else if ($('input#movie-search').is(':checked')) {
+
 			// Movie search url
 			var movieAPI = 'https://www.omdbapi.com/?';
 			// Get search terms
@@ -141,6 +143,7 @@ function sortByProperty(property) {
 function displayMovies(response) {
 	movies = response.Search;
 	checkMovieSort();
+	console.log(response);
 
 	// if user changes sort
 	$('#sortby').change(function() {
@@ -168,10 +171,11 @@ function displayMovies(response) {
 
 	function processMovie() {
 		var movieHTML = '<ul>'; // start gallery list
-
-		if (response.Response === false) {
-						movieHTML += '<p id="no-results">No results found.</p>';
+//		// Show error message if there are no results
+		if (response.Response === "False") {
+				movieHTML += '<p id="no-results">No results found.</p>';
 		}
+
 		else {
 			// Loop through search results
 			for (i=0; i<movies.length; i++) {
