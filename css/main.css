@@ -117,9 +117,6 @@ input[type=radio] {
 	width: 100%;
 }
 
-#gallery {
-}
-
 #gallery li:hover {
 	opacity: 0.6;
 }
@@ -139,7 +136,7 @@ input[type=radio] {
 	padding: 0 10px;
 	height: 300px;
 	width: 200px;
-	border: 1px solid grey;
+	border: 1px solid lightgrey;
 	position: relative;
 	margin: 10px;
 }
@@ -281,9 +278,6 @@ p.author {
 	#nextArrow {
 		width: 7%;
 	}
-}
-
-@media screen and (min-width: 580px) {
 
 	#prevArrow,
 	#nextArrow {
@@ -301,7 +295,7 @@ p.author {
 
 }
 
-@media screen and (min-width: 560px) {
+@media screen and (min-width: 568px) {
 
 	#prevArrow,
 	#nextArrow {
@@ -313,15 +307,10 @@ p.author {
 		height: 50px;
 	}
 
-	#overlay {
-		padding: 0;
-	}
-
 	#overlay-wrapper {
 		flex-direction: row;
 		justify-content: center;
 		width: 90%;
-		padding-top: 10%;
 	}
 
 	#overlay-image {
@@ -344,10 +333,7 @@ p.author {
 
 }
 
-@media screen and (min-width: 800px) {
-	#overlay {
-		padding-top: 100px;
-	}
+@media screen and (min-width: 1000px) {
 	#overlay-wrapper {
 		padding-top: 100px;
 	}

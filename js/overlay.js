@@ -3,7 +3,7 @@
 	var $overlay = $('<div id="overlay"></div>');
 	var $wrapper = $('<div id="overlay-wrapper"></div>');
 	var $image = $('<img id="overlay-image">');
-	var $text = $('<div id="overlay-t"></div');
+	var $text = $('<div id="overlay-text"></div');
 	var $title = $('<p></p>');
 	var $author = $('<p></p>');
 	var $director = $('<p></p>');
@@ -15,10 +15,7 @@
 
 /* Function to open overlay */
 function openOverlay(searchType) {
-	/* Stop click from opening img url */
-//	event.preventDefault();
-
-	/* Add overlay to body of index.html */
+	  /* Add overlay to body of index.html */
 	$("body").append($overlay);
 	$overlay.append($wrapper);
 	$wrapper.append($image);
