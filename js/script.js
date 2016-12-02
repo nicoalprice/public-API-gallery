@@ -69,8 +69,6 @@ $(document).ready(function() {
 						// If edition_key exists
 						if (books[i].edition_key != undefined) {
 							bookHTML += '<li class="' + i +'">';
-							bookHTML += '<a class="' + i +'" href="http://openlibrary.org/books/';
-							bookHTML += books[i].edition_key[0]+ '" target="_blank">';
 							bookHTML += '<img src='
 							if (books[i].cover_edition_key != undefined) {
 								bookHTML +='"http://covers.openlibrary.org/b/olid/';
@@ -79,7 +77,7 @@ $(document).ready(function() {
 							else { // Display default cover image
 								bookHTML += '"img/no-cover.png"';
 							}
-							bookHTML += ' alt="' + books[i].title + '"/></a>';
+							bookHTML += ' alt="' + books[i].title + '"/>';
 							bookHTML += '<p class="title">' + books[i].title + '</p>';
 							bookHTML +='</li>';
 						} // end edition_key if statement
@@ -91,7 +89,7 @@ $(document).ready(function() {
 				$('#gallery').html(bookHTML); //display books
 
 				// If gallery li is clicked
-				$('#gallery li a').click(function(event) {
+				$('#gallery li').click(function(event) {
 					event.PreventDefault;
 					index = $(this).attr('class');
 					setItemDetails(index, 'book');
